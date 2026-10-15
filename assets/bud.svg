@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Calyx bud, drawn like an engraved botanical plate: lilac petals wrapped by sage sepals. -->
+  <g stroke="#5F6E4C" stroke-width="2.2">
+    <path d="M120 352 C 117 310, 125 262, 120 200"/>
+    <path d="M121 292 C 150 282, 178 256, 190 222 C 162 226, 134 252, 121 292 Z" fill="#6F7F5C" fill-opacity=".14"/>
+    <path d="M121 292 C 144 268, 166 246, 190 222" stroke-width="1.4"/>
+    <path d="M140 270 l 6 -12 M152 258 l 7 -11 M164 246 l 6 -9" stroke-width="1"/>
+    <path d="M119 248 C 96 240, 76 222, 68 196 C 92 200, 112 220, 119 248 Z" fill="#6F7F5C" fill-opacity=".14"/>
+    <path d="M119 248 C 104 230, 86 212, 68 196" stroke-width="1.4"/>
+  </g>
+  <g stroke="#6B54BA" stroke-width="2.2">
+    <path d="M120 190 C 90 172, 84 120, 120 64 C 156 120, 150 172, 120 190 Z" fill="#B9A6FF" fill-opacity=".28"/>
+    <path d="M120 188 C 106 150, 108 108, 120 68" stroke-width="1.4"/>
+    <path d="M120 188 C 134 152, 134 116, 128 86" stroke-width="1.2"/>
+    <path d="M100 150 l 6 -8 M98 136 l 7 -9 M101 121 l 6 -8 M140 150 l -5 -8 M142 136 l -5 -9" stroke-width="1"/>
+  </g>
+  <g stroke="#5F6E4C" stroke-width="2.2">
+    <path d="M120 200 C 94 194, 82 168, 90 132 C 99 156, 108 174, 123 188" fill="#6F7F5C" fill-opacity=".2"/>
+    <path d="M120 200 C 146 194, 158 168, 150 132 C 141 156, 132 174, 117 188" fill="#6F7F5C" fill-opacity=".2"/>
+    <path d="M111 199 C 113 176, 117 158, 120 146 C 123 158, 127 176, 129 199" fill="#6F7F5C" fill-opacity=".3"/>
+    <path d="M108 204 C 112 196, 128 196, 132 204 C 128 211, 112 211, 108 204 Z" fill="#6F7F5C" fill-opacity=".3"/>
+  </g>
+</svg>

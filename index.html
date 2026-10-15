@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calyx · Stop opening ChatGPT for every little thing</title>
+  <meta name="description" content="A tiny AI app for your Mac. Screenshot a question, ask what you need, and get the answer without leaving the app you're in. $0.99, once.">
+  <meta property="og:title" content="Calyx · Stop opening ChatGPT for every little thing">
+  <meta property="og:description" content="Stuck on a line of code? Need a quick reply? Ask without opening another chat window. Calyx for Mac · $0.99.">
+  <meta property="og:image" content="https://nahshonl.github.io/calyx/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="assets/bud.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <svg class="grain" aria-hidden="true"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0"/></filter><rect width="100%" height="100%" filter="url(#grain)"/></svg>
+
+  <header class="nav">
+    <div class="nav-in wrap">
+      <a class="wordmark" href="index.html" aria-label="Calyx home">Calyx</a>
+      <nav aria-label="Main">
+        <a class="hide-sm" href="#examples">Examples</a>
+        <a href="features.html">Features</a>
+        <a class="hide-sm" href="#faq">FAQ</a>
+        <a class="btn btn-small" data-buy href="#price">Get Calyx · $0.99</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero: the headline on the left, the herbarium sheet on the right. As it scrolls away
+         the words drift up and the sheet tilts (--p, set by main.js). -->
+    <section class="hero" data-progress="exit">
+      <div class="hero-in wrap">
+        <div class="hero-copy" data-reveal-group>
+          <p class="eyebrow">A tiny Mac app · $0.99, once</p>
+          <h1>Stop opening ChatGPT for <em>every little thing.</em></h1>
+          <p class="lede">Got a question? Screenshot it or type it, get the answer on your clipboard, and carry on. Calyx sits in your Mac's menu bar, so you don't have to open ChatGPT every time you get stuck.</p>
+          <div class="demo" aria-label="Example: the Incognito bar">
+            <div class="demo-bar" id="demoBar"><span class="demo-text" id="demoText">why does this python loop skip the last item?</span><span class="caret" aria-hidden="true"></span></div>
+            <div class="demo-pill" id="demoPill"><span class="spin" aria-hidden="true"></span><span id="demoPillText">✓ Copied · range stops before the end</span></div>
+          </div>
+          <div class="cta">
+            <a class="btn" data-buy href="#price">Get Calyx for $0.99</a>
+            <p class="fine">Apple silicon Mac · macOS 14+ · pay once</p>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <figure class="sheet" aria-labelledby="fig1" data-reveal style="--i: 2">
+            <span class="tape tape-a" aria-hidden="true"></span>
+            <span class="tape tape-b" aria-hidden="true"></span>
+            <svg class="bud" viewBox="0 0 240 360" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A drawing of a flower bud wrapped in its green calyx">
+              <g class="leaf">
+                <path d="M120 352 C 117 310, 125 262, 120 200"/>
+                <path class="wash" d="M121 292 C 150 282, 178 256, 190 222 C 162 226, 134 252, 121 292 Z"/>
+                <path class="thin" d="M121 292 C 144 268, 166 246, 190 222"/>
+                <path class="hair" d="M140 270 l 6 -12 M152 258 l 7 -11 M164 246 l 6 -9"/>
+                <path class="wash" d="M119 248 C 96 240, 76 222, 68 196 C 92 200, 112 220, 119 248 Z"/>
+                <path class="thin" d="M119 248 C 104 230, 86 212, 68 196"/>
+              </g>
+              <g class="petal">
+                <path class="wash" d="M120 190 C 90 172, 84 120, 120 64 C 156 120, 150 172, 120 190 Z"/>
+                <path class="thin" d="M120 188 C 106 150, 108 108, 120 68"/>
+                <path class="hair" d="M120 188 C 134 152, 134 116, 128 86"/>
+                <path class="hair" d="M100 150 l 6 -8 M98 136 l 7 -9 M101 121 l 6 -8 M140 150 l -5 -8 M142 136 l -5 -9"/>
+              </g>
+              <g class="leaf">
+                <path class="wash2" d="M120 200 C 94 194, 82 168, 90 132 C 99 156, 108 174, 123 188"/>
+                <path class="wash2" d="M120 200 C 146 194, 158 168, 150 132 C 141 156, 132 174, 117 188"/>
+                <path class="wash3" d="M111 199 C 113 176, 117 158, 120 146 C 123 158, 127 176, 129 199"/>
+                <path class="wash3" d="M108 204 C 112 196, 128 196, 132 204 C 128 211, 112 211, 108 204 Z"/>
+              </g>
+            </svg>
+            <figcaption class="label" id="fig1">
+              <span class="label-head">A little collection of Mac apps</span>
+              <span class="label-name"><i>Calyx macintoshiana</i></span>
+              <dl>
+                <dt>Found</dt><dd>In the menu bar, next to the clock</dd>
+                <dt>Note</dt><dd>A calyx is the green part around a flower bud. Small, easy to miss. Kind of the idea.</dd>
+              </dl>
+              <span class="label-fig">fig. 1</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- The statement: pinned while its words light up one by one. -->
+    <section class="statement" data-progress="pin" aria-label="What Calyx is for">
+      <div class="pin">
+        <div class="wrap">
+          <p class="statement-text" data-words>You know when you're stuck on a coding question, or just need a quick reply, and opening ChatGPT feels like a whole extra task? <em>That's what Calyx is for.</em> Hit a shortcut, ask your question, and get the answer back where you were. No switching apps, copying stuff over, or leaving a giant chat window open.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why not just open ChatGPT? The comparison plays out while it's pinned. -->
+    <section class="why alt" id="why" aria-labelledby="why-title">
+      <div class="why-top wrap">
+        <h2 class="title" id="why-title" data-reveal>Why not just open ChatGPT?</h2>
+        <p class="lead" data-reveal>You definitely can. But say you're halfway through a coding practice question and you're stuck. Now you've got to copy the question, open ChatGPT, paste it in, wait for an answer, then switch back. Sometimes you don't even want a big ChatGPT window sitting on your screen. Calyx just cuts out all of that.</p>
+      </div>
+
+      <div class="compare" data-progress="pin">
+        <div class="pin">
+          <div class="wrap">
+            <div class="compare-grid">
+              <div class="col old" data-done=".5">
+                <h3 class="col-h">The usual way <span class="count">7 steps</span></h3>
+                <ol>
+                  <li data-at=".03"><span class="t">Get stuck on a question</span></li>
+                  <li data-at=".09" style="--i: 1"><span class="t">Open ChatGPT or Claude</span></li>
+                  <li data-at=".15" style="--i: 2"><span class="t">Copy the question over (or take a screenshot and upload it)</span></li>
+                  <li data-at=".21" style="--i: 3"><span class="t">Explain what you need</span></li>
+                  <li data-at=".27" style="--i: 4"><span class="t">Find the useful part of the answer</span></li>
+                  <li data-at=".33" style="--i: 5"><span class="t">Switch back to your work</span></li>
+                  <li data-at=".39" style="--i: 6"><span class="t">Copy and paste it in</span></li>
+                </ol>
+              </div>
+              <div class="col new">
+                <h3 class="col-h">With Calyx <span class="count">3 steps</span></h3>
+                <ol>
+                  <li data-at=".56"><span>Press <kbd>⌃Space</kbd> to screenshot the question</span></li>
+                  <li data-at=".66"><span>Ask for an answer, a fix, or even just a hint</span></li>
+                  <li data-at=".76"><span>Press <kbd>Return</kbd> to copy it, or <kbd>⌃⇧Space</kbd> to paste it straight into the field you're in</span></li>
+                </ol>
+              </div>
+            </div>
+            <p class="compare-end" data-at=".86">No jumping between apps. No full chat window. Just the bit you needed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-bottom wrap">
+        <h3 class="title-md" data-reveal>A few other reasons you might prefer it</h3>
+        <div class="bento" data-reveal-group>
+          <article class="card wide">
+            <div class="viz" aria-hidden="true">
+              <div class="vz-doc"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="vz-bar">give me a hint<span>+1 screenshot</span></div>
+              <div class="vz-slider"><span>Visibility</span><b><i></i></b></div>
+            </div>
+            <h4>You can keep it low-key.</h4>
+            <p>Calyx can sit as a small, see-through strip instead of a big chat window. Good when you want a quick bit of help without turning your whole screen into ChatGPT. It's discreet, not invisible.</p>
+          </article>
+
+          <article class="card">
+            <div class="viz viz-line" aria-hidden="true">
+              <p class="vz-essay">Sure! Great question. Let's break this down step by step. First, it's worth understanding how lists work in Python, because…</p>
+              <p class="vz-one"><span>Calyx</span>Keep a set of the numbers you've already seen.</p>
+            </div>
+            <h4>It doesn't write an essay when you need one line.</h4>
+            <p>Ask it for code and it'll give you code. Ask for a hint and it'll give you a hint. The point is to get something you can actually use, without digging through a long reply.</p>
+          </article>
+
+          <article class="card">
+            <div class="viz viz-apps" aria-hidden="true">
+              <ul>
+                <li style="--n: 0"><b>VS Code</b><span>Fix this code</span></li>
+                <li style="--n: 1"><b>WhatsApp</b><span>Write a reply</span></li>
+                <li style="--n: 2"><b>Mail</b><span>Write a reply</span></li>
+                <li style="--n: 3"><b>Terminal</b><span>Explain in 2 lines</span></li>
+              </ul>
+            </div>
+            <h4>It works where you're already working.</h4>
+            <p>In VS Code, it starts with <i>Fix this code</i>. In WhatsApp or Mail, it starts with <i>Write a reply</i>. You can change that whenever you want.</p>
+          </article>
+
+          <article class="card">
+            <div class="viz viz-receipt" aria-hidden="true">
+              <div class="rc">
+                <p class="rc-h">Receipt</p>
+                <p><span>Calyx for Mac</span><span>$0.99</span></p>
+                <p><span>Monthly fee</span><span>$0.00</span></p>
+                <p class="rc-t"><span>You pay Calyx</span><span>$0.99</span></p>
+                <span class="rc-n">AI usage is billed by your provider</span>
+              </div>
+            </div>
+            <h4>No subscription for Calyx.</h4>
+            <p>The app is $0.99 once. For online answers, you bring your own OpenAI or Anthropic API key and pay the provider for what you use. Depending on how often you ask, that can cost less than a monthly chat plan.</p>
+          </article>
+
+          <article class="card">
+            <div class="viz viz-models" aria-hidden="true">
+              <ul class="vz-menu">
+                <li class="sel">Claude Opus 5.5</li>
+                <li>Claude Sonnet 5.5</li>
+                <li class="hov">Claude Haiku 5.5</li>
+                <li class="sep"></li>
+                <li>ChatGPT · gpt-5.5</li>
+                <li>On this Mac</li>
+              </ul>
+            </div>
+            <h4>You can choose the AI.</h4>
+            <p>Claude or OpenAI, in one place. No bouncing between two apps.</p>
+          </article>
+
+          <article class="card full">
+            <div>
+              <h4>It still does basic stuff offline.</h4>
+              <p>With macOS 26 and Apple Intelligence enabled, Calyx can use the AI on your Mac when there's no internet. It's not as capable as Claude, but it's handy for simpler questions.</p>
+            </div>
+            <div class="viz viz-offline" aria-hidden="true">
+              <div class="vz-mbar">
+                <span class="mb-bud"></span>
+                <svg class="wifi off" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/><path class="wifi-x" d="M2 11.5 14 .5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                <span>Thu 9:41</span>
+              </div>
+              <div class="vz-box">
+                <div class="cx-chips"><span class="chip">On this Mac</span><span class="chip chip-ghost">offline</span></div>
+                <p>18% of 64.50</p>
+                <p class="vz-sum">✓ Copied · $11.61</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p class="honest" data-reveal>To be clear, Calyx isn't replacing ChatGPT or Claude for everything. If you want a long conversation, proper research, or a big project, the full apps make more sense. Calyx is for those quick questions where opening another app just feels unnecessary.</p>
+      </div>
+    </section>
+
+    <!-- How it works: the screen sticks while the three steps scroll past it. -->
+    <section class="how" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="sec-head center">
+          <h2 class="title" id="how-title" data-reveal>It's pretty simple</h2>
+        </div>
+        <div class="story" data-steps data-cumulative>
+          <div class="story-steps">
+            <article class="story-step" data-step>
+              <p class="story-num">Step 1</p>
+              <p class="story-keys"><kbd>⌥Space</kbd></p>
+              <h3>Open Calyx.</h3>
+              <p class="story-text">It pops up over whatever you're doing, even if the app is full-screen. You don't lose your place.</p>
+            </article>
+            <article class="story-step" data-step>
+              <p class="story-num">Step 2</p>
+              <p class="story-keys"><kbd>⌘V</kbd> or <kbd>⌃Space</kbd></p>
+              <h3>Give it something to work with.</h3>
+              <p class="story-text">Type your question, paste some code, drop in a file, or screenshot what's on your screen.</p>
+            </article>
+            <article class="story-step" data-step>
+              <p class="story-num">Step 3</p>
+              <p class="story-keys"><kbd>Return</kbd></p>
+              <h3>Get the answer.</h3>
+              <p class="story-text">Press Return and it's copied. Or press <kbd>⌃⇧Space</kbd> and Calyx puts the answer straight into the text field you're using. Then it gets out of the way.</p>
+            </article>
+          </div>
+          <div class="story-stick">
+            <div class="screen-frame">
+              <div class="screen how-screen" data-step-screen aria-hidden="true">
+                <div class="mbar"><b>Code</b><span class="mbar-right"><span class="mb-bud"></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/></svg><span>Thu 9:41</span></span></div>
+                <div class="win">
+                  <div class="win-bar"><i></i><i></i><i></i><span>practice.py</span></div>
+                  <div class="win-body">
+                    <div class="code">
+                      <div><b>1</b>items = ["a", "b", "c"]</div>
+                      <div><b>2</b></div>
+                      <div class="fix"><b>3</b><span class="was">for i in range(len(items) - 1):</span><span class="now">for i in range(len(items)):</span></div>
+                      <div><b>4</b>    print(items[i])</div>
+                      <div><b>5</b></div>
+                      <div><b>6</b><em># prints a, b ... where's c?</em></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="cx-box">
+                  <div class="cx-chips"><span class="chip hw-shot">+1 screenshot</span><span class="chip chip-ghost">Fix this code ▾</span></div>
+                  <div class="cx-in"><span class="hw-ph">Ask about it…</span><span class="hw-q">why does this skip the last item?</span></div>
+                </div>
+                <div class="corner"><span>✓ Pasted · range stops before the end</span></div>
+                <div class="flash"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Examples: short scripted scenes, played on a fake Mac screen. -->
+    <section class="examples alt" id="examples" aria-labelledby="examples-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="title" id="examples-title" data-reveal>Okay, but when would I actually use this?</h2>
+          <p class="lead" data-reveal>Here's the kind of stuff I mean. Nothing complicated, just the little things you get stuck on every day.</p>
+        </div>
+
+        <div class="uses">
+          <ol class="uses-list" data-reveal-group>
+            <li class="use">
+              <button class="use-tab" type="button" data-scene="py" aria-pressed="true"><span class="use-num">1</span>You're stuck on a coding practice question</button>
+              <p class="use-cap">You're doing a Python exercise and have no clue where to start. Normally you'd open ChatGPT, copy the question across and switch back again. With Calyx, screenshot the question using <kbd>⌃Space</kbd>, open the bar with <kbd>⌥Space</kbd>, type <i>give me a hint, not the answer</i>, and hit Return. You get a hint without leaving the exercise or putting a big chat window on screen.</p>
+            </li>
+            <li class="use">
+              <button class="use-tab" type="button" data-scene="css" aria-pressed="false"><span class="use-num">2</span>Your code isn't working and you can't see why</button>
+              <p class="use-cap">You've stared at the same line for five minutes. Screenshot it, ask what's wrong, and get a fix you can paste in. No need to open a new tab and explain the whole situation from scratch.</p>
+            </li>
+            <li class="use">
+              <button class="use-tab" type="button" data-scene="chat" aria-pressed="false"><span class="use-num">3</span>You need to reply to someone, but can't be bothered wording it</button>
+              <p class="use-cap">You know what you want to say. You just don't feel like typing out a proper message. Write the messy version in Calyx and paste the reply into your chat. That's it.</p>
+            </li>
+            <li class="use">
+              <button class="use-tab" type="button" data-scene="off" aria-pressed="false"><span class="use-num">4</span>You're on the train with no Wi-Fi</button>
+              <p class="use-cap">If your Mac supports Apple's on-device AI, Calyx can still handle basic questions offline. The little bud in the menu bar goes grey when you're disconnected. The offline model isn't quite as smart, but it's there when you need it.</p>
+            </li>
+          </ol>
+
+          <div class="screen-frame" data-progress="enter">
+            <div class="screen stage" id="stage" data-active="py" aria-hidden="true">
+              <div class="mbar">
+                <b class="mbar-app">Browser</b>
+                <span class="mbar-right">
+                  <span class="mb-bud"></span>
+                  <svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/><path class="wifi-x" d="M2 11.5 14 .5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                  <span>Thu 9:41</span>
+                </span>
+              </div>
+
+              <div class="win">
+                <div class="win-bar"><i></i><i></i><i></i><span class="win-title">Python practice · Arrays</span></div>
+                <div class="win-body">
+
+                  <div class="scene sc-py on" data-scene="py" data-app="Browser" data-title="Python practice · Arrays">
+                    <p class="q-meta">Question 4 of 10</p>
+                    <p class="q-text">Return the first number that appears twice in a list.</p>
+                    <p class="py-ex">Example: <code>[4, 2, 5, 2, 4]</code> → <code>2</code></p>
+                    <div class="py-ed"><div><b>1</b><span class="kw">def</span> first_repeat(nums):</div><div><b>2</b>    </div></div>
+                    <div class="ib"><span><span class="cx-type" data-fill></span></span><span class="ib-tag">+1 screenshot</span></div>
+                  </div>
+
+                  <div class="scene sc-css" data-scene="css" data-app="Browser" data-title="CSS exercise 3 of 12">
+                    <p class="q-meta">CSS colors</p>
+                    <p class="q-text">Fill in the blank so the text turns red.</p>
+                    <pre class="ex-code">&lt;p style="<span class="ex-blank"><span class="ex-fill" data-fill></span></span>:red;"&gt;
+  Hello
+&lt;/p&gt;</pre>
+                    <div class="ex-row"><span class="ex-submit">Submit answer</span><span class="ex-result">✓ Correct</span></div>
+                    <div class="ib"><span><span class="cx-type" data-fill></span></span><span class="ib-tag">+1 screenshot</span></div>
+                  </div>
+
+                  <div class="scene sc-chat" data-scene="chat" data-app="Chat" data-title="sat dinner 🍜 (5)">
+                    <div class="ch-msg"><b>Wei</b>booking for 7 on sat</div>
+                    <div class="ch-msg"><b>Wei</b>who's coming, need numbers by tonight</div>
+                    <div class="ch-msg"><b>Aisha</b>me!!</div>
+                    <div class="ch-compose"><span class="ch-fill" data-fill></span></div>
+                    <div class="cx-box">
+                      <div class="cx-chips"><span class="chip">Write a reply</span><span class="chip chip-ghost">Claude</span></div>
+                      <div class="cx-in"><span class="cx-type" data-fill></span></div>
+                      <div class="cx-wait"><span class="spin"></span>Thinking…</div>
+                      <div class="cx-sum">✓ Copied · coming, but at 8</div>
+                    </div>
+                  </div>
+
+                  <div class="scene sc-off" data-scene="off" data-app="Notes" data-title="Trip money">
+                    <p class="nt-h">Trip money</p>
+                    <p>Dinner came to $64.50. Adding 18% tip.</p>
+                    <p>Tip: <span class="nt-fill" data-fill></span></p>
+                    <div class="cx-box">
+                      <div class="cx-chips"><span class="chip">On this Mac</span><span class="chip chip-ghost">offline</span></div>
+                      <div class="cx-in"><span class="cx-type" data-fill></span></div>
+                      <div class="cx-wait"><span class="spin"></span>Thinking…</div>
+                      <div class="cx-sum">✓ Copied · $11.61</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="corner"><span class="spin"></span><span class="corner-t"></span></div>
+              <div class="kc"></div>
+              <div class="flash"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A pointer to the full features page. -->
+    <section class="more" aria-labelledby="more-title">
+      <div class="wrap center">
+        <h2 class="title" id="more-title" data-reveal>That's the main stuff.</h2>
+        <p class="lead" data-reveal>There's more in there, like the four layouts, your last 10 answers, context files, and shortcuts you can change.</p>
+        <a class="btn" href="features.html" data-reveal>See all features</a>
+      </div>
+    </section>
+
+    <!-- Price -->
+    <section class="price-sec alt" id="price" aria-labelledby="price-title">
+      <div class="wrap">
+        <img class="price-icon" src="assets/app-icon.png" width="96" height="96" alt="A pale flower bud on a dark rounded square" data-reveal>
+        <h2 class="price-big" id="price-title" data-reveal="scale">$0.99.</h2>
+        <p class="price-sub" data-reveal>Once. Not every month.</p>
+        <p class="price-body" data-reveal>That's for all four layouts, all the features, and future updates.</p>
+        <p class="fine price-fine" data-reveal>For Claude or OpenAI answers, you'll need your own API key. They charge separately based on usage. If your Mac supports Apple's offline model, you can use that without a key.</p>
+        <a class="btn" data-buy href="#price" data-reveal>Get Calyx · $0.99</a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 class="title" id="faq-title" data-reveal>Questions</h2>
+        <details>
+          <summary>Isn't this just ChatGPT?</summary>
+          <p>Kind of. It uses the same AI models, so it's not claiming to be smarter. The difference is how you use it. You're stuck on a coding question, you screenshot it, get a hint, and get back to coding. No separate ChatGPT window and no copying everything back and forth. For longer conversations, I'd still use the proper apps.</p>
+        </details>
+        <details>
+          <summary>Do I need an API key?</summary>
+          <p>For Claude or OpenAI, yes. Get one from Anthropic or OpenAI, paste it into Settings, and click <i>Test key</i>. The provider charges you for what you use. Apple's offline model doesn't need a key.</p>
+        </details>
+        <details>
+          <summary>Will it work on my Mac?</summary>
+          <p>As long as it's an Apple silicon Mac (M1 or newer) on macOS 14 or later. Offline AI needs macOS 26 with Apple Intelligence enabled.</p>
+        </details>
+        <details>
+          <summary>Why does it need Screen Recording and Accessibility permissions?</summary>
+          <p>Screen Recording lets you attach what's on your screen. Accessibility lets Calyx paste into other apps for you. You can skip either permission and the rest of the app still works. You can check permissions under Settings › Shortcuts.</p>
+        </details>
+        <details>
+          <summary>My Mac says Calyx "can't be opened."</summary>
+          <p>macOS can block apps downloaded outside the App Store. Go to System Settings › Privacy &amp; Security, scroll down, then choose <i>Open Anyway</i> for Calyx. You should only need to do it once.</p>
+        </details>
+        <details>
+          <summary>What if I don't like it?</summary>
+          <p>Email <a data-contact href="mailto:hello@example.com">hello@example.com</a> and I'll refund the $0.99. No point making that a whole thing.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot-in wrap">
+      <div>
+        <span class="wordmark">Calyx</span>
+        <p>Named after the green bit around a flower bud. Small, tucked away, doesn't really get in your way. That felt about right.</p>
+      </div>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#examples">Examples</a>
+        <a href="features.html">Features</a>
+        <a href="#faq">FAQ</a>
+        <a data-contact href="mailto:hello@example.com">Contact</a>
+      </nav>
+      <p class="fine">© 2026</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
