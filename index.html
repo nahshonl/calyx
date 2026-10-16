@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Calyx · Stop opening ChatGPT for every little thing</title>
-  <meta name="description" content="A tiny AI app for your Mac. Screenshot a question, ask what you need, and get the answer without leaving the app you're in. $0.99, once.">
-  <meta property="og:title" content="Calyx · Stop opening ChatGPT for every little thing">
-  <meta property="og:description" content="Stuck on a line of code? Need a quick reply? Ask without opening another chat window. Calyx for Mac · $0.99.">
+  <title>Calyx · Copy the question, paste the answer</title>
+  <meta name="description" content="Calyx is copy and paste with an AI in the middle. Screenshot what you're stuck on, press one more key, and the answer is pasted in. $0.99 for Mac.">
+  <meta property="og:title" content="Calyx · Copy the question, paste the answer">
+  <meta property="og:description" content="Copy and paste with an AI in the middle, and an Incognito mode that keeps it out of sight. Calyx for Mac · $0.99.">
   <meta property="og:image" content="https://nahshonl.github.io/calyx/assets/og.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="color-scheme" content="light dark">
@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=202610161511">
+  <link rel="stylesheet" href="styles.css?v=202610161522">
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -39,9 +39,9 @@
     <section class="hero" data-progress="exit">
       <div class="hero-in wrap">
         <div class="hero-copy" data-reveal-group>
-          <p class="eyebrow">A tiny Mac app · $0.99, once</p>
-          <h1>Stop opening ChatGPT for <em>every little thing.</em></h1>
-          <p class="lede">Got a question? Screenshot it or type it, get the answer on your clipboard, and carry on. Calyx sits in your Mac's menu bar, so you don't have to open ChatGPT every time you get stuck.</p>
+          <p class="eyebrow">Smart paste for your Mac · $0.99</p>
+          <h1><span>Copy the question.</span> <em>Paste the answer.</em></h1>
+          <p class="lede">Calyx is copy and paste with an AI in the middle. Grab what you're stuck on with <kbd>⌃Space</kbd>, press <kbd>⌃⇧Space</kbd>, and the answer lands wherever you were typing. In Incognito mode it barely shows up on screen while it works.</p>
           <div class="demo" aria-label="Example: the Incognito bar">
             <div class="demo-bar" id="demoBar"><span class="demo-text" id="demoText">why does this python loop skip the last item?</span><span class="caret" aria-hidden="true"></span></div>
             <div class="demo-pill" id="demoPill"><span class="spin" aria-hidden="true"></span><span id="demoPillText">✓ Copied · range stops before the end</span></div>
@@ -96,7 +96,7 @@
     <section class="statement" data-progress="pin" aria-label="What Calyx is for">
       <div class="pin">
         <div class="wrap">
-          <p class="statement-text" data-words>You know when you're stuck on a coding question, or just need a quick reply, and opening ChatGPT feels like a whole extra task? <em>That's what Calyx is for.</em> Hit a shortcut, ask your question, and get the answer back where you were. No switching apps, copying stuff over, or leaving a giant chat window open.</p>
+          <p class="statement-text" data-words>You already know how to copy and paste. Calyx slips an AI in between, <em>so what comes out the other end is the answer.</em> You never open a chat window, and you can keep it faint enough that it doesn't take over your screen.</p>
         </div>
       </div>
     </section>
@@ -104,8 +104,9 @@
     <!-- Why not just open ChatGPT? The comparison plays out while it's pinned. -->
     <section class="why alt" id="why" aria-labelledby="why-title">
       <div class="why-top wrap">
+        <p class="eyebrow" data-reveal>Convenience</p>
         <h2 class="title" id="why-title" data-reveal>Why not just open ChatGPT?</h2>
-        <p class="lead" data-reveal>You definitely can. But say you're halfway through a coding practice question and you're stuck. Now you've got to copy the question, open ChatGPT, paste it in, wait for an answer, then switch back. Sometimes you don't even want a big ChatGPT window sitting on your screen. Calyx just cuts out all of that.</p>
+        <p class="lead" data-reveal>You can. But say you're halfway through a practice question and you're stuck. You copy it, open ChatGPT, paste it in, wait, hunt for the useful bit, then switch back and paste again. Calyx skips all of that, and you never end up with a big chat window sitting on your screen.</p>
       </div>
 
       <div class="compare" data-progress="pin">
@@ -128,11 +129,11 @@
                 <h3 class="col-h">With Calyx <span class="count">2 steps</span></h3>
                 <ol>
                   <li data-at=".58"><span>Press <kbd>⌃Space</kbd> to screenshot the question</span></li>
-                  <li data-at=".7"><span>Press <kbd>⌃⇧Space</kbd>. The answer's on your clipboard. No window pops up, nothing to type.</span></li>
+                  <li data-at=".7"><span>Press <kbd>⌃⇧Space</kbd> and the answer is on your clipboard, without a window ever opening</span></li>
                 </ol>
               </div>
             </div>
-            <p class="compare-end" data-at=".82">No jumping between apps. No full chat window. Just the bit you needed.</p>
+            <p class="compare-end" data-at=".82">Two keys, and you never left what you were doing.</p>
           </div>
         </div>
       </div>
@@ -141,13 +142,17 @@
         <h3 class="title-md" data-reveal>A few other reasons you might prefer it</h3>
         <div class="bento" data-reveal-group>
           <article class="card wide">
-            <div class="viz" aria-hidden="true">
-              <div class="vz-doc"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="vz-bar">give me a hint<span>+1 screenshot</span></div>
-              <div class="vz-slider"><span>Visibility</span><b><i></i></b></div>
+            <div class="viz viz-history" aria-hidden="true">
+              <ul class="vz-menu vz-menu-wide">
+                <li class="vz-head">Recent answers</li>
+                <li class="hov">use a set to track repeats <span>2m</span></li>
+                <li>polite no to the Saturday workshop <span>14m</span></li>
+                <li>escaped the dot in the regex <span>1h</span></li>
+                <li>two-line summary of the PDF <span>3h</span></li>
+              </ul>
             </div>
-            <h4>You can keep it low-key.</h4>
-            <p>Calyx can sit as a small, see-through strip instead of a big chat window. Good when you want a quick bit of help without turning your whole screen into ChatGPT. It's discreet, not invisible.</p>
+            <h4>Your last 10 answers.</h4>
+            <p>Copied something else over the answer you needed? The last ten are in the menu bar with a short summary each, and one click copies it again.</p>
           </article>
 
           <article class="card">
@@ -156,7 +161,7 @@
               <p class="vz-one"><span>Calyx</span>Keep a set of the numbers you've already seen.</p>
             </div>
             <h4>It doesn't write an essay when you need one line.</h4>
-            <p>Ask it for code and it'll give you code. Ask for a hint and it'll give you a hint. The point is to get something you can actually use, without digging through a long reply.</p>
+            <p>Ask for code and you get code. Ask for a hint and you get a hint, rather than three paragraphs you have to dig through first.</p>
           </article>
 
           <article class="card">
@@ -169,7 +174,7 @@
               </ul>
             </div>
             <h4>It works where you're already working.</h4>
-            <p>In VS Code, it starts with <i>Fix this code</i>. In WhatsApp or Mail, it starts with <i>Write a reply</i>. You can change that whenever you want.</p>
+            <p>In VS Code it starts on <i>Fix this code</i>. In WhatsApp or Mail it starts on <i>Write a reply</i>. You can always pick something else.</p>
           </article>
 
           <article class="card">
@@ -183,7 +188,7 @@
               </div>
             </div>
             <h4>No subscription for Calyx.</h4>
-            <p>The app is $0.99 once. For online answers, you bring your own OpenAI or Anthropic API key and pay the provider for what you use. Depending on how often you ask, that can cost less than a monthly chat plan.</p>
+            <p>The app costs $0.99, once. For online answers you use your own OpenAI or Anthropic key and pay them for what you use, which can work out cheaper than a monthly chat plan if you only ask now and then.</p>
           </article>
 
           <article class="card">
@@ -198,13 +203,13 @@
               </ul>
             </div>
             <h4>You can choose the AI.</h4>
-            <p>Claude or OpenAI, in one place. No bouncing between two apps.</p>
+            <p>Claude and OpenAI models sit in the same menu, so switching takes one click.</p>
           </article>
 
           <article class="card full">
             <div>
               <h4>It still does basic stuff offline.</h4>
-              <p>With macOS 26 and Apple Intelligence enabled, Calyx can use the AI on your Mac when there's no internet. It's not as capable as Claude, but it's handy for simpler questions.</p>
+              <p>With macOS 26 and Apple Intelligence on, Calyx falls back to the AI built into your Mac when there's no internet. It's weaker than Claude but fine for simple questions.</p>
             </div>
             <div class="viz viz-offline" aria-hidden="true">
               <div class="vz-mbar">
@@ -221,7 +226,55 @@
           </article>
         </div>
 
-        <p class="honest" data-reveal>To be clear, Calyx isn't replacing ChatGPT or Claude for everything. If you want a long conversation, proper research, or a big project, the full apps make more sense. Calyx is for those quick questions where opening another app just feels unnecessary.</p>
+        <p class="honest" data-reveal>To be clear, Calyx isn't trying to replace ChatGPT or Claude. For long conversations, proper research or a big project, the full apps make more sense. Calyx is for the quick questions where opening another app feels like overkill.</p>
+      </div>
+    </section>
+
+    <!-- Incognito: the screen sticks while the bar turns faint and then disappears. -->
+    <section class="inc" id="incognito" aria-labelledby="inc-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow" data-reveal>Incognito</p>
+          <h2 class="title" id="inc-title" data-reveal>Ask without a trace.</h2>
+          <p class="lead" data-reveal>Incognito mode swaps the window for a thin dark strip. Turn it down until it's barely there, type your question, press Return, and it disappears until the answer's ready. It's the mode I use most.</p>
+        </div>
+        <div class="story" data-steps>
+          <div class="story-steps">
+            <article class="story-step" data-step>
+              <p class="story-keys"><kbd>⌥Space</kbd></p>
+              <h3>A strip instead of a window.</h3>
+              <p class="story-text">A thin dark bar shows up over whatever you're doing. It has no buttons, no chat history and no shadow, only the words you type.</p>
+            </article>
+            <article class="story-step" data-step>
+              <p class="story-keys">Settings › Incognito</p>
+              <h3>Turn it down to almost nothing.</h3>
+              <p class="story-text">You choose how see-through it is, anywhere from 5% to solid. Near the bottom of that range you can only just make it out.</p>
+              <p class="story-detail">It's discreet, not invisible. If you share or record your screen, people can still see it.</p>
+            </article>
+            <article class="story-step" data-step>
+              <p class="story-keys"><kbd>Return</kbd></p>
+              <h3>Press Return and it's gone.</h3>
+              <p class="story-text">The bar vanishes while Calyx works. A small mark in a corner of your screen spins, then shows a tick and a few words once the answer is on your clipboard.</p>
+            </article>
+          </div>
+          <div class="story-stick">
+            <div class="screen-frame">
+              <div class="screen inc-screen" data-step-screen data-active="1" aria-hidden="true">
+                <div class="mbar"><b>Pages</b><span class="mbar-right"><span class="mb-bud"></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/></svg><span>Thu 9:41</span></span></div>
+                <div class="win">
+                  <div class="win-bar"><i></i><i></i><i></i><span>Q3 report draft</span></div>
+                  <div class="win-body">
+                    <p class="inc-h">Q3 report</p>
+                    <div class="doc-lines inc-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                  </div>
+                </div>
+                <div class="ib inc-bar"><span>make this paragraph shorter<span class="inc-caret"></span></span><span class="ib-tag">+1 screenshot</span></div>
+                <div class="inc-vis"><span>Visibility</span><b><i></i></b><span class="inc-pct">15%</span></div>
+                <div class="corner"><span class="spin"></span><span class="inc-done">✓ Copied · cut it to two sentences</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -237,19 +290,19 @@
               <p class="story-num">Step 1</p>
               <p class="story-keys"><kbd>⌃Space</kbd></p>
               <h3>Screenshot it.</h3>
-              <p class="story-text">Grab whatever you're stuck on: a bug, a question, an error. Calyx stays out of the shot, and you don't leave the app you're in.</p>
+              <p class="story-text">Grab whatever you're stuck on, whether that's a bug, a quiz question or an email. Calyx leaves itself out of the shot.</p>
             </article>
             <article class="story-step" data-step>
               <p class="story-num">Step 2</p>
               <p class="story-keys"><kbd>⌃⇧Space</kbd></p>
               <h3>Send it.</h3>
-              <p class="story-text">No window pops up and you don't have to type anything. Want to ask something specific? Press <kbd>⌥Space</kbd> first and add a question. Totally optional.</p>
+              <p class="story-text">No window opens and you don't have to type anything. If you do want to ask something specific, press <kbd>⌥Space</kbd> first and add a question.</p>
             </article>
             <article class="story-step" data-step>
               <p class="story-num">Step 3</p>
               <p class="story-keys"><kbd>⌘V</kbd></p>
               <h3>Paste the answer.</h3>
-              <p class="story-text">The whole fix is already on your clipboard. Paste it in and carry on. That's the entire thing.</p>
+              <p class="story-text">The whole fix is already on your clipboard, so paste it in and keep going.</p>
             </article>
           </div>
           <div class="story-stick">
@@ -284,26 +337,26 @@
       <div class="wrap">
         <div class="sec-head">
           <h2 class="title" id="examples-title" data-reveal>Okay, but when would I actually use this?</h2>
-          <p class="lead" data-reveal>Here's the kind of stuff I mean. Nothing complicated, just the little things you get stuck on every day.</p>
+          <p class="lead" data-reveal>Here's the kind of thing I mean. Nothing fancy, just the small stuff you get stuck on every day.</p>
         </div>
 
         <div class="uses">
           <ol class="uses-list" data-reveal-group>
             <li class="use">
               <button class="use-tab" type="button" data-scene="quiz" aria-pressed="true"><span class="use-num">1</span>You're stuck on a practice quiz question</button>
-              <p class="use-cap">You're halfway through a practice quiz and one question has you stuck. Press <kbd>⌃Space</kbd> to screenshot it, then <kbd>⌃⇧Space</kbd>. The answer shows up in the corner of your screen, like <i>B · binary search</i>. No window, nothing to type, and the full explanation is on your clipboard if you want it.</p>
+              <p class="use-cap">You're halfway through a practice quiz and one question has you stuck. Press <kbd>⌃Space</kbd> to screenshot it, then <kbd>⌃⇧Space</kbd>, and the answer shows up in the corner of your screen, like <i>B · binary search</i>. You don't type anything, and the full explanation is on your clipboard if you want it.</p>
             </li>
             <li class="use">
               <button class="use-tab" type="button" data-scene="code" aria-pressed="false"><span class="use-num">2</span>A coding exercise and a blank editor</button>
-              <p class="use-cap">The exercise wants a function and you've got nothing written. Click into the editor, press <kbd>⌃Space</kbd>, then <kbd>⌃⇧Space</kbd>. Calyx writes the whole thing and pastes it in, one shot. You don't even have to explain the question.</p>
+              <p class="use-cap">The exercise wants a function and you haven't written a line. Click into the editor, press <kbd>⌃Space</kbd>, then <kbd>⌃⇧Space</kbd>, and Calyx writes the whole function and pastes it in. You don't even have to explain the question.</p>
             </li>
             <li class="use">
               <button class="use-tab" type="button" data-scene="mail" aria-pressed="false"><span class="use-num">3</span>A work email you need to say no to</button>
-              <p class="use-cap">Someone wants you at a Saturday workshop. You don't want to go, and you don't want to spend ten minutes wording it. Press <kbd>⌃Space</kbd> to grab the email, then <kbd>⌥Space</kbd>, type <i>say no politely</i>, and press <kbd>⌃⇧Space</kbd>. A proper reply lands in the email. Done.</p>
+              <p class="use-cap">Someone wants you at a Saturday workshop and you'd rather not spend ten minutes wording a no. Grab the email with <kbd>⌃Space</kbd>, press <kbd>⌥Space</kbd>, type <i>say no politely</i>, and press <kbd>⌃⇧Space</kbd>. A proper reply appears in the email.</p>
             </li>
             <li class="use">
               <button class="use-tab" type="button" data-scene="off" aria-pressed="false"><span class="use-num">4</span>You're on the train with no Wi-Fi</button>
-              <p class="use-cap">If your Mac supports Apple's on-device AI, Calyx can still handle basic questions offline. The little bud in the menu bar goes grey when you're disconnected. The offline model isn't quite as smart, but it's there when you need it.</p>
+              <p class="use-cap">If your Mac supports Apple's on-device AI, Calyx still answers basic questions offline. The bud in the menu bar goes grey when you're disconnected, so you know which model you're getting. It isn't as sharp as Claude, but it works on a train.</p>
             </li>
           </ol>
 
@@ -380,7 +433,7 @@
     <section class="more" aria-labelledby="more-title">
       <div class="wrap center">
         <h2 class="title" id="more-title" data-reveal>That's the main stuff.</h2>
-        <p class="lead" data-reveal>There's more in there, like the four layouts, your last 10 answers, context files, and shortcuts you can change.</p>
+        <p class="lead" data-reveal>There's more in there, like the four layouts, context files you can attach once, and shortcuts you can change.</p>
         <a class="btn" href="features.html" data-reveal>See all features</a>
       </div>
     </section>
@@ -390,9 +443,9 @@
       <div class="wrap">
         <img class="price-icon" src="assets/app-icon.png" width="96" height="96" alt="A pale flower bud on a dark rounded square" data-reveal>
         <h2 class="price-big" id="price-title" data-reveal="scale">$0.99.</h2>
-        <p class="price-sub" data-reveal>Once. Not every month.</p>
-        <p class="price-body" data-reveal>That's for all four layouts, all the features, and future updates.</p>
-        <p class="fine price-fine" data-reveal>For Claude or OpenAI answers, you'll need your own API key. They charge separately based on usage. If your Mac supports Apple's offline model, you can use that without a key.</p>
+        <p class="price-sub" data-reveal>Paid once, not every month.</p>
+        <p class="price-body" data-reveal>That covers every layout and feature, Incognito included, plus future updates.</p>
+        <p class="fine price-fine" data-reveal>For Claude or OpenAI answers you'll need your own API key, and they bill you for what you use. If your Mac supports Apple's offline model, that one needs no key.</p>
         <a class="btn" data-buy href="#price" data-reveal>Get Calyx · $0.99</a>
       </div>
     </section>
@@ -403,7 +456,7 @@
         <h2 class="title" id="faq-title" data-reveal>Questions</h2>
         <details>
           <summary>Isn't this just ChatGPT?</summary>
-          <p>Kind of. It uses the same AI models, so it's not claiming to be smarter. The difference is how you use it. You're stuck on a coding question, you screenshot it, get a hint, and get back to coding. No separate ChatGPT window and no copying everything back and forth. For longer conversations, I'd still use the proper apps.</p>
+          <p>Kind of. It uses the same AI models, so it isn't claiming to be smarter. The difference is how you use it: you screenshot the question, press one more key, and the answer is pasted in, without a ChatGPT window or any copying back and forth. For longer conversations I'd still use the proper apps.</p>
         </details>
         <details>
           <summary>Do I need an API key?</summary>
@@ -422,6 +475,10 @@
           <p>macOS can block apps downloaded outside the App Store. Go to System Settings › Privacy &amp; Security, scroll down, then choose <i>Open Anyway</i> for Calyx. You should only need to do it once.</p>
         </details>
         <details>
+          <summary>Can other people see the Incognito bar?</summary>
+          <p>If they're looking at your screen, yes, though at low visibility it's faint. It also shows up if you share or record your screen. Incognito keeps your screen uncluttered. It isn't built to hide anything from anyone.</p>
+        </details>
+        <details>
           <summary>What if I don't like it?</summary>
           <p>Email <a data-contact href="mailto:hello@example.com">hello@example.com</a> and I'll refund the $0.99. No point making that a whole thing.</p>
         </details>
@@ -433,7 +490,7 @@
     <div class="foot-in wrap">
       <div>
         <span class="wordmark">Calyx</span>
-        <p>Named after the green bit around a flower bud. Small, tucked away, doesn't really get in your way. That felt about right.</p>
+        <p>Named after the green bit around a flower bud. It's small and tucked away and doesn't get in the way, which felt about right.</p>
       </div>
       <nav class="foot-links" aria-label="Footer">
         <a href="#examples">Examples</a>
@@ -445,6 +502,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=202610161511"></script>
+  <script src="main.js?v=202610161522"></script>
 </body>
 </html>

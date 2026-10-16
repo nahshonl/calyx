@@ -164,6 +164,9 @@ kbd {
 .hero-art { transform: translateY(calc(var(--p, 0) * 90px)); }
 .hero h1 { font-family: var(--display); font-size: clamp(3rem, 6.4vw, 5.3rem); line-height: .96; letter-spacing: -.02em; text-wrap: balance; }
 .hero h1 em { color: var(--lilac); }
+.hero h1 > span, .hero h1 > em { display: block; }
+@media (max-width: 880px) { .hero h1 { font-size: clamp(2.2rem, 10.4vw, 3rem); } }
+@media (min-width: 881px) { .hero h1 { font-size: clamp(3rem, 5.4vw, 4.6rem); } .hero h1 > span, .hero h1 > em { white-space: nowrap; } }
 .lede { font-size: 1.25rem; max-width: 33rem; color: var(--ink-2); text-wrap: pretty; }
 .cta { display: grid; gap: 12px; justify-items: start; margin-top: 4px; }
 
@@ -503,6 +506,51 @@ kbd {
 .how-screen.s3 .fix { animation: hl 1.8s ease-out; }
 @keyframes hl { 0%, 35% { background: color-mix(in srgb, var(--lilac-wash) 45%, transparent); } 100% { background: transparent; } }
 
+/* Incognito: a dark section whatever the theme, with the bar fading out as you scroll. */
+.inc {
+  --board: #13111A; --sheet: #1C1926; --card: #1C1926;
+  --ink: #ECE6FF; --ink-2: #ABA4BE; --rule: rgba(236, 230, 255, .14);
+  --lilac: #B9A6FF; --sage: #9DAE86;
+  --win: #2A2636; --win-ink: #ECE6FF; --win-2: #353042; --desk: #2B2638; --mbar: rgba(0, 0, 0, .3);
+  --hud-edge: rgba(255, 255, 255, .1);
+  background: var(--board); color: var(--ink);
+  padding-block: clamp(96px, 13vw, 176px);
+}
+.inc kbd { background: var(--sheet); }
+.inc .story-keys { font: .8rem var(--mono); font-style: normal; letter-spacing: .04em; color: var(--sage); }
+.inc .story-keys kbd { font-size: 1rem; }
+.inc-h { padding: 1.2em 1.8em 0; font-size: 1.3em; font-weight: 700; }
+.inc-lines { position: static; padding: .9em 1.8em; }
+.inc-screen .inc-bar { top: 42%; transition: opacity .6s var(--ease); }
+.inc-caret { display: inline-block; width: 1.5px; height: 1.05em; margin-left: 1px; vertical-align: -.15em; background: currentColor; animation: blink 1s steps(1) infinite; }
+.inc-screen[data-active="1"] .inc-bar { opacity: .95; }
+.inc-screen[data-active="2"] .inc-bar { opacity: .2; }
+.inc-screen[data-active="3"] .inc-bar { opacity: 0; }
+.inc-vis {
+  position: absolute; left: 50%; top: calc(42% + 3.8em); translate: -50% 0; z-index: 2;
+  display: flex; align-items: center; gap: .7em; width: min(18em, 70%);
+  padding: .45em .8em; border-radius: .5em; background: var(--win); box-shadow: var(--shadow);
+  font-size: .8em; color: var(--ink-2);
+  opacity: 0; transition: opacity .4s;
+}
+.inc-vis b { position: relative; flex: 1; height: 3px; border-radius: 2px; background: var(--rule); }
+.inc-vis i { position: absolute; top: 50%; left: 90%; width: 1em; height: 1em; border-radius: 50%; background: var(--ink); translate: -50% -50%; transition: left .9s var(--ease); }
+.inc-screen[data-active="2"] .inc-vis { opacity: 1; }
+.inc-screen[data-active="2"] .inc-vis i { left: 12%; }
+.inc-screen .corner .inc-done { display: none; }
+.inc-screen[data-active="3"] .corner { opacity: 1; transform: none; }
+.inc-screen[data-active="3"] .corner .spin { display: inline-block; animation: turn .8s linear infinite, gone 0s 1.6s forwards; }
+.inc-screen[data-active="3"] .corner .inc-done { display: inline; opacity: 0; animation: show-in .3s 1.6s forwards; }
+@keyframes gone { to { width: 0; border-width: 0; margin: 0; } }
+@keyframes show-in { to { opacity: 1; } }
+
+/* The answer-history card. */
+.viz-history { display: grid; place-items: center; background: var(--desk); }
+.vz-menu-wide { width: min(340px, 90%); }
+.vz-menu-wide li { display: flex; justify-content: space-between; gap: 12px; }
+.vz-menu-wide li span { opacity: .7; }
+.vz-menu .vz-head { padding-left: 8px; font-size: 11px; font-weight: 600; color: var(--ink-2); }
+
 /* ------------------------------------------------------------------ examples */
 .examples { padding-block: clamp(96px, 13vw, 176px); }
 .uses { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
@@ -732,7 +780,9 @@ kbd {
   .js [data-reveal] { opacity: 1; translate: none; scale: none; transition: none; }
   .statement, .compare { height: auto; }
   .statement .pin, .compare .pin { position: static; height: auto; padding-block: 72px; }
-  .caret, .spin, .cx-type::after, .vz-bar, .vz-slider i, .viz-apps li, .scene.on, .how-screen .fix { animation: none; }
-  .btn, .demo-bar, .demo-pill, .compare li, .compare-end, .old li .t, .story-step, .lay, .cx-box, .ib { transition: none; }
+  .caret, .spin, .cx-type::after, .inc-caret, .vz-bar, .vz-slider i, .viz-apps li, .scene.on, .how-screen .fix { animation: none; }
+  .inc-screen[data-active="3"] .corner .spin { display: none; }
+  .inc-screen[data-active="3"] .corner .inc-done { opacity: 1; }
+  .inc-bar, .inc-vis, .inc-vis i, .btn, .demo-bar, .demo-pill, .compare li, .compare-end, .old li .t, .story-step, .lay, .cx-box, .ib { transition: none; }
   .hk { animation: none; }
 }
