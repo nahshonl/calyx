@@ -488,20 +488,29 @@ kbd {
 .code b { display: inline-block; width: 2.2em; font-weight: 400; color: var(--ink-2); opacity: .6; }
 .code em { font-style: normal; color: var(--sage); }
 .code .now { display: none; }
-.how-screen .cx-box { top: auto; bottom: 1.6em; opacity: 0; translate: -50% .6em; }
-.how-screen.s1 .cx-box { opacity: 1; translate: -50% 0; }
-.how-screen.s3 .cx-box { opacity: 0; translate: -50% .6em; }
-.hw-shot { display: none; }
-.how-screen.s2 .hw-shot { display: inline-block; }
-.hw-ph { color: var(--ink-2); opacity: .7; }
-.how-screen.s2 .hw-ph { display: none; }
-.hw-q { display: inline-block; max-width: 0; overflow: hidden; white-space: nowrap; vertical-align: bottom; }
-.how-screen.s2 .hw-q { max-width: 22em; transition: max-width 1.4s steps(33, end) .45s; }
-.how-screen.s2 .flash { animation: flash .5s ease-out; }
+/* Step 1 flashes a screenshot, step 2 sends it (the question is optional), step 3 pastes the fix.
+   The key for the current step sits at the bottom of the screen. */
+.how-screen[data-active="1"] .flash { animation: flash .5s ease-out; }
+.hw-opt {
+  position: absolute; left: 50%; bottom: 4.6em; translate: -50% 0; z-index: 2;
+  width: min(24em, 80%); padding: .6em .9em; border-radius: .6em;
+  border: 1.5px dashed color-mix(in srgb, var(--win-ink) 30%, transparent);
+  background: color-mix(in srgb, var(--win) 80%, transparent);
+  color: var(--ink-2); font-size: .9em;
+  opacity: 0; transition: opacity .35s;
+}
+.hw-opt-tag { display: block; margin-bottom: .2em; font-size: .78em; letter-spacing: .04em; text-transform: uppercase; color: var(--lilac); }
+.how-screen[data-active="2"] .hw-opt { opacity: 1; }
+.how-screen .corner span { display: none; }
+.how-screen[data-active="1"] .corner, .how-screen.s2 .corner { opacity: 1; transform: none; }
+.how-screen[data-active="1"] .hc1, .how-screen.s2 .hc2 { display: inline; }
+.how-screen .hw-keys { bottom: 1.2em; left: 1.4em; transform: none; opacity: 1; font-size: 1.5em; }
+.hk { display: none; animation: keyin .4s var(--ease); }
+.how-screen[data-active="1"] .hk1, .how-screen[data-active="2"] .hk2, .how-screen[data-active="3"] .hk3 { display: inline; }
+@keyframes keyin { from { opacity: 0; translate: 0 .3em; } }
 .how-screen.s3 .fix .was { display: none; }
 .how-screen.s3 .fix .now { display: inline; }
 .how-screen.s3 .fix { animation: hl 1.8s ease-out; }
-.how-screen.s3 .corner { opacity: 1; transform: none; }
 @keyframes hl { 0%, 35% { background: color-mix(in srgb, var(--lilac-wash) 45%, transparent); } 100% { background: transparent; } }
 
 /* ------------------------------------------------------------------ examples */
@@ -541,7 +550,10 @@ kbd {
 .py-ed div { white-space: pre; }
 .py-ed b { display: inline-block; width: 1.8em; font-weight: 400; opacity: .45; }
 .py-ed .kw { color: #C9B8FF; }
-.sc-py .ib, .sc-css .ib { top: 54%; }
+.q-opts { list-style: none; margin: 0; padding: 0; display: grid; gap: .4em; }
+.q-opts li { padding: .45em .8em; border: 1px solid var(--rule); border-radius: .5em; transition: background .3s, border-color .3s; }
+.sc-quiz.picked .q-right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, transparent); }
+.sc-quiz.picked .q-right::after { content: "  ✓ Correct"; color: var(--ok); font-weight: 600; }
 
 .ex-code { margin: 0; padding: .9em 1em; border-radius: .5em; background: #1F1B2B; color: #E6E1F2; font-size: .95em; line-height: 1.6; white-space: pre; overflow: hidden; }
 .ex-blank { display: inline-block; min-width: 4.2em; padding: 0 .3em; border-bottom: 1.5px solid #9D93B5; background: rgba(255, 255, 255, .07); vertical-align: bottom; }
@@ -728,5 +740,6 @@ kbd {
   .statement, .compare { height: auto; }
   .statement .pin, .compare .pin { position: static; height: auto; padding-block: 72px; }
   .caret, .spin, .cx-type::after, .vz-bar, .vz-slider i, .viz-apps li, .scene.on, .how-screen .fix { animation: none; }
-  .btn, .demo-bar, .demo-pill, .compare li, .compare-end, .old li .t, .story-step, .lay, .cx-box, .ib, .hw-q { transition: none; }
+  .btn, .demo-bar, .demo-pill, .compare li, .compare-end, .old li .t, .story-step, .lay, .cx-box, .ib, .hw-opt { transition: none; }
+  .hk { animation: none; }
 }

@@ -198,38 +198,30 @@ update();
   const app = stage.querySelector(".mbar-app");
 
   const SCENES = {
-    py: [
+    quiz: [
       { at: 900, keys: "⌃ Space", flash: true, corner: "Screenshot 1" },
-      { at: 1200, keys: "⌥ Space", cls: "open", corner: "" },
-      { at: 600, type: [".cx-type", "give me a hint, not the answer"] },
-      { at: 500, keys: "Return", cls: "sent", corner: "Thinking", spin: true },
-      { at: 1700, corner: "✓ Copied · use a set to track what you've seen" },
+      { at: 1300, keys: "⌃ ⇧ Space", corner: "Thinking", spin: true },
+      { at: 1700, corner: "✓ B · binary search halves the list each step" },
+      { at: 1600, cls: "picked" },
     ],
     css: [
-      { at: 900, keys: "⌃ Space", flash: true, corner: "Screenshot 1" },
-      { at: 1200, keys: "⌥ Space", cls: "open", corner: "" },
-      { at: 600, type: [".cx-type", "what's missing here?"] },
-      { at: 500, keys: "Return", cls: "sent", corner: "Thinking", spin: true },
-      { at: 1600, corner: "✓ Copied · use the color property" },
-      { at: 1200, cls: "focused" },
-      { at: 600, keys: "⌘ V", paste: [".ex-fill", "color"] },
-      { at: 1000, cls: "submitted" },
+      { at: 800, cls: "focused" },
+      { at: 800, keys: "⌃ Space", flash: true, corner: "Screenshot 1" },
+      { at: 1300, keys: "⌃ ⇧ Space", corner: "Thinking", spin: true },
+      { at: 1600, paste: [".ex-fill", "color"], corner: "✓ Pasted · use the color property" },
+      { at: 1300, cls: "submitted" },
     ],
     chat: [
       { at: 900, keys: "⌥ Space", cls: "open" },
       { at: 600, type: [".cx-type", "say yes but i can only come at 8"] },
-      { at: 500, keys: "Return", cls: "thinking" },
-      { at: 1500, cls: "done" },
-      { at: 1400, keys: "Esc", cls: "closed" },
-      { at: 700, keys: "⌘ V", paste: [".ch-fill", "I'm in! Can only make it by 8 though, so you guys can start first"] },
+      { at: 500, keys: "⌃ ⇧ Space", cls: "closed", corner: "Thinking", spin: true },
+      { at: 1500, paste: [".ch-fill", "I'm in! Can only make it by 8 though, so you guys can start first"], corner: "✓ Pasted · coming, but at 8" },
     ],
     off: [
       { at: 900, keys: "⌥ Space", cls: "open" },
       { at: 600, type: [".cx-type", "18% of 64.50"] },
-      { at: 500, keys: "Return", cls: "thinking" },
-      { at: 1900, cls: "done" },
-      { at: 1400, keys: "Esc", cls: "closed" },
-      { at: 700, keys: "⌘ V", paste: [".nt-fill", "$11.61"] },
+      { at: 500, keys: "⌃ ⇧ Space", cls: "closed", corner: "Thinking", spin: true },
+      { at: 1900, paste: [".nt-fill", "$11.61"], corner: "✓ Pasted · on this Mac" },
     ],
   };
   const ORDER = Object.keys(SCENES);
