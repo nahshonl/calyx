@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&text=%CE%BA%CE%B1%CE%BB%CF%8D%CF%80%CF%84%CF%89kalypt%C5%8DCso%C2%B7&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=202610161619">
+  <link rel="stylesheet" href="styles.css?v=202610161638">
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -43,9 +43,10 @@
           <p class="eyebrow">Smart paste for your Mac · $0.99</p>
           <h1><span>Copy the question.</span> <em>Paste the answer.</em></h1>
           <p class="lede">Calyx is copy and paste with an AI in the middle. Grab what you're stuck on with <kbd>⌃Space</kbd>, press <kbd>⌃⇧Space</kbd>, and the answer lands wherever you were typing. In Calypso, its incognito mode, it barely shows up on screen while it works.</p>
-          <div class="demo" aria-label="Example: the Calypso bar">
-            <div class="demo-bar" id="demoBar"><span class="demo-text" id="demoText">why does this python loop skip the last item?</span><span class="caret" aria-hidden="true"></span></div>
-            <div class="demo-pill" id="demoPill"><span class="spin" aria-hidden="true"></span><span id="demoPillText">✓ Copied · range stops before the end</span></div>
+          <div class="demo" aria-label="Example: the Calypso bar, and the island at the top of the screen">
+            <div class="demo-edge" aria-hidden="true"></div>
+            <div class="qi on" id="demoIsl" aria-hidden="true"><span class="qi-ico" data-i="ok"><i></i><i></i><i></i></span><span class="qi-t">range stops before the end</span></div>
+            <div class="demo-bar" id="demoBar"><span class="demo-text" id="demoText">why does this python loop skip the last item?</span><span class="caret" aria-hidden="true"></span><span class="demo-tag" id="demoTag"></span></div>
           </div>
           <div class="cta">
             <a class="btn" data-buy href="#price">Get Calyx for $0.99</a>
@@ -146,7 +147,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="corner"><span class="hc1">Screenshot 1</span><span class="hc2">✓ Copied · range stops before the end</span></div>
+                <div class="isl" data-s=""><div class="isl-body"><div class="isl-row"><span><i class="ic-cam"></i><i class="ic-bud"></i><i class="ic-ok"></i></span><span><b class="isl-n">1</b><span class="isl-bars"><i></i><i></i><i></i><i></i></span><span class="isl-cap">Copied</span></span></div><div class="isl-more"><div><p class="isl-msg">range stops before the end</p></div></div></div></div>
                 <div class="kc hw-keys"><span class="hk hk1">⌃ Space</span><span class="hk hk2">⌃ ⇧ Space</span><span class="hk hk3">⌘ V</span></div>
                 <div class="flash"></div>
               </div>
@@ -325,6 +326,12 @@
         <div class="story" data-steps>
           <div class="story-steps">
             <article class="story-step" data-step>
+              <p class="story-keys">Menu bar › Turn On Calypso</p>
+              <h3>Tucked away.</h3>
+              <p class="story-text">Switch it on from the menu bar, or type <i>/calypso</i>. The screen frosts over and a lilac flower opens in the middle, then folds shut into a bud as two green leaves close around it. The bud tucks up into a little black island at the top of the screen. That's the one loud bit. After that everything goes quiet, and the menu-bar icon turns into a pair of sunglasses so you know it's on.</p>
+              <p class="story-detail">Turning it off runs it backwards: the bud drops out of the island and opens up again. You can switch the animation off in Settings › Calypso.</p>
+            </article>
+            <article class="story-step" data-step>
               <p class="story-keys"><kbd>⌥Space</kbd></p>
               <h3>A strip instead of a window.</h3>
               <p class="story-text">A thin dark bar shows up over whatever you're doing. It has no buttons, no chat history and no shadow, only the words you type.</p>
@@ -332,19 +339,19 @@
             <article class="story-step" data-step>
               <p class="story-keys">Settings › Calypso</p>
               <h3>Turn it down to almost nothing.</h3>
-              <p class="story-text">You choose how see-through it is, anywhere from 5% to solid. Near the bottom of that range you can only just make it out.</p>
+              <p class="story-text">You choose how see-through it is, anywhere from 5% to solid, and the island goes just as faint. Near the bottom of that range you can only just make it out.</p>
               <p class="story-detail">It's discreet, not invisible. If you share or record your screen, people can still see it.</p>
             </article>
             <article class="story-step" data-step>
               <p class="story-keys"><kbd>Return</kbd></p>
               <h3>Press Return and it's gone.</h3>
-              <p class="story-text">The bar vanishes while Calyx works. A small mark in a corner of your screen spins, then shows a tick and a few words once the answer is on your clipboard.</p>
+              <p class="story-text">The bar vanishes while Calyx works. The island at the top of your screen says it's thinking, then shows a few words about the answer once it's on your clipboard.</p>
             </article>
           </div>
           <div class="story-stick">
             <div class="screen-frame">
-              <div class="screen inc-screen" data-step-screen data-active="1" aria-hidden="true">
-                <div class="mbar"><b>Pages</b><span class="mbar-right"><span class="mb-bud"></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/></svg><span>Thu 9:41</span></span></div>
+              <div class="screen inc-screen" data-step-screen data-active="2" aria-hidden="true">
+                <div class="mbar"><b>Pages</b><span class="mbar-right"><span class="mb-bud"></span><span class="mb-sun"></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/></svg><span>Thu 9:41</span></span></div>
                 <div class="win">
                   <div class="win-bar"><i></i><i></i><i></i><span>Q3 report draft</span></div>
                   <div class="win-body">
@@ -352,9 +359,40 @@
                     <div class="doc-lines inc-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
                   </div>
                 </div>
-                <div class="ib inc-bar"><span>make this paragraph shorter<span class="inc-caret"></span></span><span class="ib-tag">+1 screenshot</span></div>
+                <div class="inc-pad"></div>
+                <div class="ib inc-bar"><span>make this paragraph shorter<span class="inc-caret"></span></span><span class="ib-tag">+1 file</span></div>
                 <div class="inc-vis"><span>Visibility</span><b><i></i></b><span class="inc-pct">15%</span></div>
-                <div class="corner"><span class="spin"></span><span class="inc-done">✓ Copied · cut it to two sentences</span></div>
+                <div class="qi"><span class="qi-ico" data-i="bud"><i></i><i></i><i></i></span><span class="qi-t">Calypso on</span></div>
+                <div class="curtain">
+                  <svg class="bloom" viewBox="-120 -120 240 240">
+                    <defs>
+                      <linearGradient id="blOuter" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8EEFF"/><stop offset=".5" stop-color="#C4B3FC"/><stop offset="1" stop-color="#8C66F2"/></linearGradient>
+                      <linearGradient id="blInner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#E8D6FF"/><stop offset="1" stop-color="#B08CFA"/></linearGradient>
+                      <linearGradient id="blCalyx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8CC2A8"/><stop offset="1" stop-color="#3D7361"/></linearGradient>
+                      <radialGradient id="blHeart" r=".6"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFDB8C"/></radialGradient>
+                      <path id="blP1" d="M0 0C-40.8-42-25.2-98 0-100C25.2-98 40.8-42 0 0Z"/>
+                      <path id="blP2" d="M0 0C-32.6-32.8-20.2-76.4 0-78C20.2-76.4 32.6-32.8 0 0Z"/>
+                      <path id="blP3" d="M0 0C-25.8-27.7-16-64.7 0-66C16-64.7 25.8-27.7 0 0Z"/>
+                    </defs>
+                    <g class="bl-spin" stroke="rgba(255,255,255,.35)" stroke-width=".8">
+                      <use href="#blP3" class="bl-leaf" fill="url(#blCalyx)" style="--bud: -36deg; --bloom: -146deg"/>
+                      <use href="#blP3" class="bl-leaf" fill="url(#blCalyx)" style="--bud: 36deg; --bloom: 146deg"/>
+                      <use href="#blP1" fill="url(#blOuter)" style="--bud: -20deg; --bloom: -150deg"/>
+                      <use href="#blP1" fill="url(#blOuter)" style="--bud: -12deg; --bloom: -90deg"/>
+                      <use href="#blP1" fill="url(#blOuter)" style="--bud: -4deg; --bloom: -30deg"/>
+                      <use href="#blP1" fill="url(#blOuter)" style="--bud: 4deg; --bloom: 30deg"/>
+                      <use href="#blP1" fill="url(#blOuter)" style="--bud: 12deg; --bloom: 90deg"/>
+                      <use href="#blP1" fill="url(#blOuter)" style="--bud: 20deg; --bloom: 150deg"/>
+                      <use href="#blP2" fill="url(#blInner)" style="--bud: -12deg; --bloom: -144deg"/>
+                      <use href="#blP2" fill="url(#blInner)" style="--bud: -6deg; --bloom: -72deg"/>
+                      <use href="#blP2" fill="url(#blInner)" style="--bud: 0deg; --bloom: 0deg"/>
+                      <use href="#blP2" fill="url(#blInner)" style="--bud: 6deg; --bloom: 72deg"/>
+                      <use href="#blP2" fill="url(#blInner)" style="--bud: 12deg; --bloom: 144deg"/>
+                      <circle class="bl-heart" r="11" fill="url(#blHeart)" stroke="none"/>
+                    </g>
+                  </svg>
+                  <span class="bloom-cap">Calypso</span>
+                </div>
               </div>
             </div>
           </div>
@@ -374,7 +412,7 @@
           <ol class="uses-list" data-reveal-group>
             <li class="use">
               <button class="use-tab" type="button" data-scene="quiz" aria-pressed="true"><span class="use-num">1</span>You're stuck on a practice quiz question</button>
-              <p class="use-cap">You're halfway through a practice quiz and one question has you stuck. Press <kbd>⌃Space</kbd> to screenshot it, then <kbd>⌃⇧Space</kbd>, and the answer shows up in the corner of your screen, like <i>B · binary search</i>. You don't type anything, and the full explanation is on your clipboard if you want it.</p>
+              <p class="use-cap">You're halfway through a practice quiz and one question has you stuck. Press <kbd>⌃Space</kbd> to screenshot it, then <kbd>⌃⇧Space</kbd>, and the answer shows up in a little black island at the top of your screen, like <i>B · binary search</i>. You don't type anything, and the full explanation is on your clipboard if you want it.</p>
             </li>
             <li class="use">
               <button class="use-tab" type="button" data-scene="code" aria-pressed="false"><span class="use-num">2</span>A coding exercise and a blank editor</button>
@@ -450,7 +488,7 @@
                 </div>
               </div>
 
-              <div class="corner"><span class="spin"></span><span class="corner-t"></span></div>
+              <div class="isl" data-s=""><div class="isl-body"><div class="isl-row"><span><i class="ic-cam"></i><i class="ic-bud"></i><i class="ic-ok"></i></span><span><b class="isl-n">1</b><span class="isl-bars"><i></i><i></i><i></i><i></i></span><span class="isl-cap">Copied</span></span></div><div class="isl-more"><div><p class="isl-msg"></p></div></div></div></div>
               <div class="kc"></div>
               <div class="flash"></div>
             </div>
@@ -463,7 +501,7 @@
     <section class="more" aria-labelledby="more-title">
       <div class="wrap center">
         <h2 class="title" id="more-title" data-reveal>That's the main stuff.</h2>
-        <p class="lead" data-reveal>There's more in there, like the four layouts, context files you can attach once, and shortcuts you can change.</p>
+        <p class="lead" data-reveal>There's more in there, like slash commands, a running total of what you've spent, context files you can attach once, and shortcuts you can change.</p>
         <a class="btn" href="features.html" data-reveal>See all features</a>
       </div>
     </section>
@@ -532,6 +570,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=202610161619"></script>
+  <script src="main.js?v=202610161638"></script>
 </body>
 </html>

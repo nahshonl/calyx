@@ -147,6 +147,67 @@ document.querySelectorAll("[data-words]").forEach((el) => {
   };
 })();
 
+// ------------------------------------------------------------ the island
+// Calyx's black pseudo Dynamic Island at the top of the screen. island() drives the full one (How
+// it works, the examples): "shot" with a count, "work" while it thinks, "done" with a few words
+// about the answer and a one-word caption, or "" to fold it away. quiet() drives the quiet one
+// Calypso uses: a symbol ("ok", "dots", "bud") and one line of text, or nothing to hide it.
+function island(el) {
+  const n = el.querySelector(".isl-n"), msg = el.querySelector(".isl-msg"), cap = el.querySelector(".isl-cap");
+  return (state = "", a = "", b = "") => {
+    if (state === "shot") n.textContent = a;
+    if (state === "done") { msg.textContent = a; cap.textContent = b; }
+    el.dataset.s = state;
+  };
+}
+function quiet(el) {
+  const icon = el.querySelector(".qi-ico"), text = el.querySelector(".qi-t");
+  return (symbol, line) => {
+    if (!symbol) { el.classList.remove("on"); return; }
+    icon.dataset.i = symbol;
+    text.textContent = line;
+    el.classList.remove("swap");
+    void el.offsetWidth;   // restart the quick fade
+    el.classList.add("swap", "on");
+  };
+}
+
+// How it works: step 1 counts the screenshot, step 2 thinks for a moment and then shows the answer,
+// which stays up while step 3 pastes it. (Story screens get _step(n) when the step changes.)
+(() => {
+  const screen = document.querySelector(".how-screen");
+  if (!screen) return;
+  const set = island(screen.querySelector(".isl"));
+  const answer = () => set("done", "range stops before the end", "Copied");
+  let t;
+  screen._step = (n) => {
+    clearTimeout(t);
+    if (n === 1) set("shot", 1);
+    else if (n === 2 && !still) { set("work"); t = setTimeout(answer, 1500); }
+    else if (n >= 2) answer();
+    else set();
+  };
+})();
+
+// Calypso: step 1 plays the flower (styles.css); once the bud has tucked into the island, the island
+// says "Calypso on" and the menu-bar icon turns into sunglasses. Step 4 sends the question and the
+// quiet island reports back.
+(() => {
+  const screen = document.querySelector(".inc-screen");
+  if (!screen) return;
+  const say = quiet(screen.querySelector(".qi"));
+  let timers = [];
+  const later = (ms, f) => timers.push(setTimeout(f, still ? 0 : ms));
+  screen._step = (n) => {
+    timers.forEach(clearTimeout);
+    timers = [];
+    say();
+    screen.classList.toggle("cal", n > 1);
+    if (n === 1) later(2050, () => { screen.classList.add("cal"); say("bud", "Calypso on"); });
+    if (n === 4) { say("dots", "Thinking"); later(1600, () => say("ok", "cut it to two sentences")); }
+  };
+})();
+
 // [data-progress] elements get --p from 0 to 1:
 //   exit  - 0 while the element sits at the top of the window, 1 once it has scrolled off
 //   enter - 0 as the element's top reaches the bottom of the window, 1 when it's 30% from the top
@@ -217,6 +278,7 @@ function update() {
     if (!s.screen) continue;
     s.screen.dataset.active = a + 1;
     s.steps.forEach((_, i) => s.screen.classList.toggle("s" + (i + 1), s.cumulative ? i <= a : i === a));
+    s.screen._step?.(a + 1);
   }
 
   if (spy.length) {
@@ -239,31 +301,33 @@ addEventListener("resize", () => { tracked.forEach((t) => { t.p = -1; }); queue(
 update();
 
 // ------------------------------------------------------------ the hero's Calypso bar
-// Type a question, vanish, show the corner indicator, repeat.
+// Type a question, vanish, and let the quiet island at the top of the screen report back. Repeat.
+// Attached files show as a dim "+1 file" in the bar, as they do in the app.
 (() => {
   const bar = document.getElementById("demoBar");
   if (!bar) return;
   const text = document.getElementById("demoText");
-  const pill = document.getElementById("demoPill");
-  const pillText = document.getElementById("demoPillText");
+  const tag = document.getElementById("demoTag");
+  const say = quiet(document.getElementById("demoIsl"));
 
   const examples = [
     { q: "why does this python loop skip the last item?", s: "range stops before the end" },
     { q: "reply: can't do friday, monday instead", s: "suggested Monday" },
-    { q: "+1 screenshot  give me a hint for this question", s: "try a set to track repeats" },
-    { q: "summarize this PDF in 2 lines", s: "two-line summary" },
+    { q: "give me a hint for this question", files: "+1 file", s: "try a set to track repeats" },
+    { q: "summarize this PDF in 2 lines", files: "+1 file", s: "two-line summary" },
   ];
 
-  // With reduced motion the static markup (a typed question and a finished indicator) stays put.
-  if (still) { pill.classList.add("show"); return; }
+  // With reduced motion the static markup (a typed question and a finished answer) stays put.
+  if (still) return;
 
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   (async () => {
     for (let i = 0; ; i = (i + 1) % examples.length) {
-      const { q, s } = examples[i];
+      const { q, s, files = "" } = examples[i];
       text.textContent = "";
+      tag.textContent = files;
       bar.classList.remove("gone");
-      pill.classList.remove("show", "working");
+      say();
       await wait(500);
       for (const ch of q) {
         text.textContent += ch;
@@ -271,13 +335,11 @@ update();
       }
       await wait(650);
       bar.classList.add("gone");
-      pillText.textContent = "Thinking";
-      pill.classList.add("show", "working");
+      say("dots", "Thinking");
       await wait(1400);
-      pill.classList.remove("working");
-      pillText.textContent = "✓ Copied · " + s;
+      say("ok", s);
       await wait(2600);
-      pill.classList.remove("show");
+      say();
       await wait(400);
     }
   })();
@@ -285,14 +347,13 @@ update();
 
 // ------------------------------------------------------------ "when would I actually use this?"
 // Each scene is a list of timed steps acted out on the fake Mac screen. A step can press keys
-// (shown big on screen), flash a screenshot, update Calyx's corner indicator, add a state class
-// to the scene, type text, or paste text in one go.
+// (shown big on screen), flash a screenshot, set the island (see island() above), add a state
+// class to the scene, type text, or paste text in one go.
 (() => {
   const stage = document.getElementById("stage");
   if (!stage) return;
   const tabs = [...document.querySelectorAll(".use-tab")];
-  const corner = stage.querySelector(".corner");
-  const cornerText = corner.querySelector(".corner-t");
+  const isl = island(stage.querySelector(".isl"));
   const keys = stage.querySelector(".kc");
   const flash = stage.querySelector(".flash");
   const title = stage.querySelector(".win-title");
@@ -300,30 +361,30 @@ update();
 
   const SCENES = {
     quiz: [
-      { at: 900, keys: "⌃ Space", flash: true, corner: "Screenshot 1" },
-      { at: 1300, keys: "⌃ ⇧ Space", corner: "Thinking", spin: true },
-      { at: 1700, corner: "✓ B · binary search halves the list each step" },
+      { at: 900, keys: "⌃ Space", flash: true, isl: ["shot", 1] },
+      { at: 1300, keys: "⌃ ⇧ Space", isl: ["work"] },
+      { at: 1700, isl: ["done", "B · binary search halves the list each step", "Copied"] },
       { at: 1600, cls: "picked" },
     ],
     code: [
       { at: 800, cls: "focused" },
-      { at: 800, keys: "⌃ Space", flash: true, corner: "Screenshot 1" },
-      { at: 1300, keys: "⌃ ⇧ Space", corner: "Thinking", spin: true },
-      { at: 1800, paste: [".ed-fill", "def first_repeat(nums):\n    seen = set()\n    for n in nums:\n        if n in seen:\n            return n\n        seen.add(n)"], corner: "✓ Pasted · remembers each number it has seen" },
+      { at: 800, keys: "⌃ Space", flash: true, isl: ["shot", 1] },
+      { at: 1300, keys: "⌃ ⇧ Space", isl: ["work"] },
+      { at: 1800, paste: [".ed-fill", "def first_repeat(nums):\n    seen = set()\n    for n in nums:\n        if n in seen:\n            return n\n        seen.add(n)"], isl: ["done", "remembers each number it has seen", "Pasted"] },
       { at: 1300, cls: "submitted" },
     ],
     mail: [
-      { at: 900, keys: "⌃ Space", flash: true, corner: "Screenshot 1" },
-      { at: 1200, keys: "⌥ Space", cls: "open", corner: "" },
+      { at: 900, keys: "⌃ Space", flash: true, isl: ["shot", 1] },
+      { at: 1200, keys: "⌥ Space", cls: "open", isl: [""] },
       { at: 600, type: [".cx-type", "say no politely"] },
-      { at: 500, keys: "⌃ ⇧ Space", cls: "closed", corner: "Thinking", spin: true },
-      { at: 1600, paste: [".ml-fill", "Hi Rachel, thanks for the invite! I can't make it this Saturday, but I'd be glad to catch up on what I missed next week. Best,"], corner: "✓ Pasted · polite no, offers to catch up" },
+      { at: 500, keys: "⌃ ⇧ Space", cls: "closed", isl: ["work"] },
+      { at: 1600, paste: [".ml-fill", "Hi Rachel, thanks for the invite! I can't make it this Saturday, but I'd be glad to catch up on what I missed next week. Best,"], isl: ["done", "polite no, offers to catch up", "Pasted"] },
     ],
     off: [
       { at: 900, keys: "⌥ Space", cls: "open" },
       { at: 600, type: [".cx-type", "18% of 64.50"] },
-      { at: 500, keys: "⌃ ⇧ Space", cls: "closed", corner: "Thinking", spin: true },
-      { at: 1900, paste: [".nt-fill", "$11.61"], corner: "✓ Pasted · on this Mac" },
+      { at: 500, keys: "⌃ ⇧ Space", cls: "closed", isl: ["work"] },
+      { at: 1900, paste: [".nt-fill", "$11.61"], isl: ["done", "18% of $64.50 is $11.61 · on this Mac", "Pasted"] },
     ],
   };
   const ORDER = Object.keys(SCENES);
@@ -339,16 +400,10 @@ update();
     return id === run;
   }
 
-  function setCorner(text, spin) {
-    corner.classList.toggle("show", !!text);
-    corner.classList.toggle("working", !!spin);
-    if (text) cornerText.textContent = text;
-  }
-
   function reset(scene) {
     scene.className = scene.className.split(" ").filter((c) => c === "scene" || c.startsWith("sc-")).join(" ");
     scene.querySelectorAll("[data-fill]").forEach((el) => { el.textContent = ""; });
-    setCorner("");
+    isl();
     keys.classList.remove("show");
     flash.classList.remove("go");
   }
@@ -357,7 +412,7 @@ update();
     if (step.cls) scene.classList.add(step.cls);
     if (step.paste) scene.querySelector(step.paste[0]).textContent = step.paste[1];
     if (step.type && instant) scene.querySelector(step.type[0]).textContent = step.type[1];
-    if (step.corner !== undefined) setCorner(step.corner, step.spin);
+    if (step.isl) isl(...step.isl);
     if (instant) return;
     if (step.keys) {
       keys.textContent = step.keys;

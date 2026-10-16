@@ -170,9 +170,13 @@ kbd {
 .lede { font-size: 1.25rem; max-width: 33rem; color: var(--ink-2); text-wrap: pretty; }
 .cta { display: grid; gap: 12px; justify-items: start; margin-top: 4px; }
 
-/* The Incognito demo: a faint black bar that types, vanishes, and reports back. */
+/* The Calypso demo: a faint black bar types a question and vanishes, then the quiet island hanging
+   from the top edge of the screen (the hairline) says it's thinking and gives a few words back. */
 .demo { position: relative; max-width: 420px; height: 92px; }
+.demo-edge { position: absolute; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg, transparent, var(--rule) 20%, var(--rule) 80%, transparent); }
+.demo .qi { top: 1px; font-size: 13px; }
 .demo-bar {
+  position: absolute; inset: auto 0 0;
   display: flex; align-items: center;
   height: 44px;
   padding: 0 14px;
@@ -185,23 +189,123 @@ kbd {
 }
 .demo-text { white-space: pre; overflow: hidden; text-overflow: ellipsis; }
 .caret { flex: none; width: 1.5px; height: 18px; margin-left: 1px; background: rgba(255, 255, 255, .72); animation: blink 1s steps(1) infinite; }
+.demo-tag { flex: none; margin-left: auto; padding-left: 12px; font-size: 12px; color: rgba(255, 255, 255, .4); }
 .demo-bar.gone { opacity: 0; transform: translateY(-4px); }
-.demo-pill {
-  position: absolute; right: 0; bottom: 0;
-  display: inline-flex; align-items: center; gap: 8px;
-  max-width: 100%;
-  padding: 7px 11px;
+
+/* The quiet island: what the island becomes in Calypso (with its animations on Minimal, the
+   default). A small black tab at the top of the screen with one line of text, and no colour, glow
+   or bounce. Flat along the top edge with little concave shoulders, like the notch. */
+.qi {
+  --sh: .42em;
+  position: absolute; top: 0; left: 50%; z-index: 3;
+  display: flex; align-items: center; gap: .55em;
+  max-width: calc(100% - 2 * var(--sh));
+  padding: .38em 1em .5em;
+  border-radius: 0 0 .9em .9em;
   background: var(--hud);
-  color: rgba(255, 255, 255, .8);
-  box-shadow: inset 0 0 0 1px var(--hud-edge);
-  font: 12px/1.2 var(--ui);
-  border-radius: 999px;
-  opacity: 0;
-  transition: opacity .3s;
+  box-shadow: inset 1px 0 var(--hud-edge), inset -1px 0 var(--hud-edge), inset 0 -1px var(--hud-edge);
+  color: rgba(255, 255, 255, .85);
+  font: 500 .9em/1.25 var(--ui);
+  white-space: nowrap;
+  translate: -50% 0;
+  opacity: 0; transition: opacity .18s ease-out;
+  pointer-events: none;
 }
-.demo-pill.show { opacity: 1; }
-.demo-pill .spin { display: none; }
-.demo-pill.working .spin { display: inline-block; }
+.qi.on { opacity: var(--vis, 1); }
+.qi::before, .qi::after { content: ""; position: absolute; top: 0; width: var(--sh); height: var(--sh); }
+.qi::before { right: 100%; background: radial-gradient(circle at 0 100%, transparent calc(var(--sh) - .5px), var(--hud) var(--sh)); }
+.qi::after { left: 100%; background: radial-gradient(circle at 100% 100%, transparent calc(var(--sh) - .5px), var(--hud) var(--sh)); }
+.qi-t { overflow: hidden; text-overflow: ellipsis; }
+.qi.swap > * { animation: qi-swap .18s ease-out; }
+@keyframes qi-swap { from { opacity: 0; } }
+/* Its one small symbol: a tick, three dots taking turns while it thinks, the bud, a camera. */
+.qi-ico { flex: none; display: flex; align-items: center; justify-content: space-between; width: .85em; height: .85em; color: rgba(255, 255, 255, .55); }
+.qi-ico::before { content: ""; flex: 1; align-self: stretch; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+.qi-ico i { display: none; width: .2em; height: .2em; border-radius: 50%; background: currentColor; animation: qi-dot 1s infinite; }
+.qi-ico i:nth-child(2) { animation-delay: .2s; }
+.qi-ico i:nth-child(3) { animation-delay: .4s; }
+.qi-ico[data-i="dots"] { width: .95em; }
+.qi-ico[data-i="dots"]::before { display: none; }
+.qi-ico[data-i="dots"] i { display: block; }
+.qi-ico[data-i="cam"] { width: 1em; }
+@keyframes qi-dot { 0%, 70%, 100% { opacity: .3; } 35% { opacity: 1; } }
+/* The menu-bar bud turns into sunglasses while Calypso is on. */
+.mb-sun { display: none; flex: none; width: 1.6em; height: 1em; background: currentColor; }
+/* The symbols, drawn once and used as masks. */
+.qi-ico[data-i="ok"], .ic-ok::after { --m: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M2.8 8.7 6.3 12 13.2 4.4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"); }
+.mb-sun { --m: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 14'><rect x='.5' y='1.4' width='31' height='2' rx='1'/><path d='M2.3 2.8h11.4c.5 4.6-1.4 9.6-5.9 9.7-4.3.1-6-3.9-5.5-9.7zM29.7 2.8H18.3c-.5 4.6 1.4 9.6 5.9 9.7 4.3.1 6-3.9 5.5-9.7z'/></svg>"); }
+.qi-ico[data-i="bud"] { --m: url("assets/bud-glyph.svg"); }
+.qi-ico[data-i="cam"], .ic-cam { --m: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'><path fill-rule='evenodd' d='M6.2 3.2 7.3 1.5c.3-.4.7-.6 1.2-.6h3c.5 0 .9.2 1.2.6l1.1 1.7h2.8A2.4 2.4 0 0 1 19 5.6v7a2.4 2.4 0 0 1-2.4 2.4H3.4A2.4 2.4 0 0 1 1 12.6v-7a2.4 2.4 0 0 1 2.4-2.4zM10 5.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z'/></svg>"); }
+.mb-sun, .ic-cam, .ic-ok::after { -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+
+/* The island: Calyx's black pseudo Dynamic Island, hanging from the top edge of the screen. It
+   morphs between a screenshot count, a thinking animation with a slowly turning colour rim, and a
+   few words about the answer, then folds away. Sizes follow the app at the mockups' scale, where
+   its 30pt top row is 2.25em. main.js sets data-s to "", "shot", "work" or "done". */
+@property --isl-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.isl {
+  --spring: cubic-bezier(.3, 1.4, .5, 1);
+  position: absolute; top: 0; left: 50%; z-index: 3;
+  width: 9.6em; max-width: 94%;
+  translate: -50% 0; scale: .8; transform-origin: 50% 0;
+  opacity: 0;
+  color: #fff; font-weight: 500;
+  transition: width .56s var(--spring), scale .56s var(--spring), opacity .3s;
+  pointer-events: none;
+}
+.isl[data-s="shot"], .isl[data-s="work"] { width: 14.7em; }
+.isl[data-s="done"] { width: 29.4em; }
+.isl[data-s="shot"], .isl[data-s="work"], .isl[data-s="done"] { opacity: 1; scale: 1; }
+.isl-body {
+  position: relative;
+  background: #000;
+  border-radius: 0 0 1.125em 1.125em;
+  box-shadow: 0 .45em 1.2em rgba(0, 0, 0, .32), inset 1px 0 var(--hud-edge), inset -1px 0 var(--hud-edge), inset 0 -1px var(--hud-edge);
+  transition: border-radius .56s var(--spring);
+}
+.isl[data-s="done"] .isl-body { border-radius: 0 0 1.95em 1.95em; }
+.isl-body::before, .isl-body::after { content: ""; position: absolute; top: 0; width: .53em; height: .53em; }
+.isl-body::before { right: 100%; background: radial-gradient(circle at 0 100%, transparent calc(.53em - .5px), #000 .53em); }
+.isl-body::after { left: 100%; background: radial-gradient(circle at 100% 100%, transparent calc(.53em - .5px), #000 .53em); }
+/* The top row: what's happening on the left, a count, the thinking bars or a caption on the right. */
+.isl-row { display: flex; align-items: center; justify-content: space-between; height: 2.25em; padding: 0 1.2em; }
+.isl-row > span { display: flex; align-items: center; }
+.isl-row > span > * { display: none; animation: isl-swap .45s var(--ease); }
+.isl[data-s="shot"] :is(.ic-cam, .isl-n), .isl[data-s="work"] .ic-bud, .isl[data-s="done"] :is(.ic-ok, .isl-cap) { display: block; }
+.isl[data-s="work"] .isl-bars { display: flex; }
+@keyframes isl-swap { from { opacity: 0; filter: blur(4px); scale: .7; } }
+.ic-cam { width: 1.15em; height: .95em; background: #fff; }
+.ic-bud { width: .95em; height: 1.2em; background: linear-gradient(#A78BFA, #F0ABFC); -webkit-mask: url("assets/bud-glyph.svg") center / contain no-repeat; mask: url("assets/bud-glyph.svg") center / contain no-repeat; }
+.isl[data-s="work"] .ic-bud { animation: isl-swap .45s var(--ease), isl-pulse 1.5s ease-in-out .45s infinite; }
+@keyframes isl-pulse { 50% { opacity: .45; } }
+.ic-ok { position: relative; width: 1.1em; height: 1.1em; border-radius: 50%; background: #30D158; }
+.ic-ok::after { content: ""; position: absolute; inset: 24%; background: #fff; }
+.isl-n { min-width: 1.67em; height: 1.67em; padding: 0 .35em; border-radius: .84em; background: #8E7BFF; font: 700 .9em/1.67em ui-rounded, var(--ui); text-align: center; }
+.isl-bars { align-items: center; gap: .19em; height: 1.2em; }
+.isl-bars i { width: .225em; height: .375em; border-radius: .2em; background: #A78BFA; animation: isl-wave .36s ease-in-out infinite alternate; }
+.isl-bars i:nth-child(2) { animation-delay: -.22s; }
+.isl-bars i:nth-child(3) { animation-delay: -.43s; }
+.isl-bars i:nth-child(4) { animation-delay: -.65s; }
+@keyframes isl-wave { to { height: 1.125em; } }
+.isl-cap { font-size: .86em; font-weight: 600; color: rgba(255, 255, 255, .55); }
+/* Below the row, once there's an answer: a few words about it. */
+.isl-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
+.isl[data-s="done"] .isl-more { grid-template-rows: 1fr; }
+.isl-more > div { min-height: 0; overflow: hidden; }
+.isl-msg { padding: .1em 1.5em 1.1em; text-align: center; font-size: 1.01em; line-height: 1.3; color: rgba(255, 255, 255, .94); text-wrap: balance; }
+/* While it thinks, a colour rim turns slowly around it: a crisp line and a soft glow. */
+.isl::before, .isl::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border-radius: 0 0 1.125em 1.125em;
+  background: conic-gradient(from var(--isl-a), #A78BFA, #F0ABFC, #7DD3FC, #A78BFA);
+  opacity: 0; transition: opacity .4s;
+}
+.isl::before { z-index: -1; filter: blur(.5em); }
+.isl::after { z-index: 1; padding: 1.4px; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+.isl[data-s="work"]::before { opacity: .55; animation: isl-turn 3s linear infinite; }
+.isl[data-s="work"]::after { opacity: 1; animation: isl-turn 3s linear infinite; }
+@keyframes isl-turn { to { --isl-a: 360deg; } }
+
 .spin {
   flex: none;
   width: 12px; height: 12px;
@@ -444,19 +548,7 @@ kbd {
 }
 .ib-tag { opacity: .55; font-size: .85em; white-space: nowrap; }
 
-/* Screen-wide bits: the corner indicator, the key being pressed, the screenshot flash. */
-.corner {
-  position: absolute; right: 1em; bottom: 1em; z-index: 3; max-width: 64%;
-  display: flex; align-items: center; gap: .5em;
-  padding: .45em .8em; border-radius: 1em;
-  background: var(--hud); color: rgba(255, 255, 255, .85);
-  box-shadow: inset 0 0 0 1px var(--hud-edge);
-  font-size: .85em;
-  opacity: 0; transform: translateY(.3em); transition: opacity .25s, transform .25s;
-}
-.corner.show { opacity: 1; transform: none; }
-.corner .spin { display: none; width: 1em; height: 1em; }
-.corner.working .spin { display: inline-block; }
+/* Screen-wide bits: the key being pressed and the screenshot flash. (The island is further up.) */
 .kc {
   position: absolute; left: 50%; bottom: 22%; z-index: 4;
   padding: .35em .7em; border-radius: .35em;
@@ -491,12 +583,9 @@ kbd {
 .code b { display: inline-block; width: 2.2em; font-weight: 400; color: var(--ink-2); opacity: .6; }
 .code em { font-style: normal; color: var(--sage); }
 .code .now { display: none; }
-/* Step 1 flashes a screenshot, step 2 sends it, step 3 pastes the fix.
-   The key for the current step sits at the bottom of the screen. */
+/* Step 1 flashes a screenshot, step 2 sends it, step 3 pastes the fix. The island follows along
+   (main.js), and the key for the current step sits at the bottom of the screen. */
 .how-screen[data-active="1"] .flash { animation: flash .5s ease-out; }
-.how-screen .corner span { display: none; }
-.how-screen[data-active="1"] .corner, .how-screen.s2 .corner { opacity: 1; transform: none; }
-.how-screen[data-active="1"] .hc1, .how-screen.s2 .hc2 { display: inline; }
 .how-screen .hw-keys { bottom: 1.2em; left: 1.4em; transform: none; opacity: 1; font-size: 1.5em; }
 .hk { display: none; animation: keyin .4s var(--ease); }
 .how-screen[data-active="1"] .hk1, .how-screen[data-active="2"] .hk2, .how-screen[data-active="3"] .hk3 { display: inline; }
@@ -603,28 +692,92 @@ kbd {
 .inc .story-keys kbd { font-size: 1rem; }
 .inc-h { padding: 1.2em 1.8em 0; font-size: 1.3em; font-weight: 700; }
 .inc-lines { position: static; padding: .9em 1.8em; }
-.inc-screen .inc-bar { top: 42%; transition: opacity .6s var(--ease); }
+/* Step 1 turns Calypso on, step 2 brings up the bar, step 3 turns it down, step 4 sends it. */
+.inc-screen .inc-bar { top: 42%; opacity: 0; transition: opacity .6s var(--ease); }
 .inc-caret { display: inline-block; width: 1.5px; height: 1.05em; margin-left: 1px; vertical-align: -.15em; background: currentColor; animation: blink 1s steps(1) infinite; }
-.inc-screen[data-active="1"] .inc-bar { opacity: .95; }
-.inc-screen[data-active="2"] .inc-bar { opacity: .2; }
-.inc-screen[data-active="3"] .inc-bar { opacity: 0; }
+.inc-screen[data-active="2"] .inc-bar { opacity: .95; }
+.inc-screen[data-active="3"] .inc-bar { opacity: .2; }
+.inc-screen .qi { --vis: .8; }
+.inc-screen.cal .mb-bud, .lay-screen[data-active="1"] .mb-bud { display: none; }
+.inc-screen.cal .mb-sun, .lay-screen[data-active="1"] .mb-sun { display: inline-block; }
+/* Step 3: the page behind softens and a clean patch sits under the bar and the slider, so the bar
+   reads as faint rather than as text showing through it. The slider card lines up under the bar. */
+.inc-screen .win-body { transition: filter .6s var(--ease), opacity .6s var(--ease); }
+.inc-screen[data-active="3"] .win-body { filter: blur(1.5px); opacity: .4; }
+.inc-pad {
+  position: absolute; left: 50%; top: calc(42% - .9em); translate: -50% 0; z-index: 2;
+  width: calc(min(25em, 82%) + 2em); height: 7.3em;
+  border-radius: 1em; background: var(--win); box-shadow: 0 0 1em .7em var(--win);
+  opacity: 0; transition: opacity .6s var(--ease);
+}
+.inc-screen[data-active="3"] .inc-pad { opacity: 1; }
 .inc-vis {
-  position: absolute; left: 50%; top: calc(42% + 3.8em); translate: -50% 0; z-index: 2;
-  display: flex; align-items: center; gap: .7em; width: min(18em, 70%);
-  padding: .45em .8em; border-radius: .5em; background: var(--win); box-shadow: var(--shadow);
+  position: absolute; left: 50%; top: calc(42% + 4.5em); translate: -50% 0; z-index: 2;
+  display: flex; align-items: center; gap: .7em; width: min(31.25em, 82%);
+  padding: .45em .9em; border-radius: .6em; background: var(--win-2); box-shadow: var(--shadow);
   font-size: .8em; color: var(--ink-2);
   opacity: 0; transition: opacity .4s;
 }
 .inc-vis b { position: relative; flex: 1; height: 3px; border-radius: 2px; background: var(--rule); }
 .inc-vis i { position: absolute; top: 50%; left: 90%; width: 1em; height: 1em; border-radius: 50%; background: var(--ink); translate: -50% -50%; transition: left .9s var(--ease); }
-.inc-screen[data-active="2"] .inc-vis { opacity: 1; }
-.inc-screen[data-active="2"] .inc-vis i { left: 12%; }
-.inc-screen .corner .inc-done { display: none; }
-.inc-screen[data-active="3"] .corner { opacity: 1; transform: none; }
-.inc-screen[data-active="3"] .corner .spin { display: inline-block; animation: turn .8s linear infinite, gone 0s 1.6s forwards; }
-.inc-screen[data-active="3"] .corner .inc-done { display: inline; opacity: 0; animation: show-in .3s 1.6s forwards; }
-@keyframes gone { to { width: 0; border-width: 0; margin: 0; } }
-@keyframes show-in { to { opacity: 1; } }
+.inc-screen[data-active="3"] .inc-vis { opacity: 1; }
+.inc-screen[data-active="3"] .inc-vis i { left: 12%; }
+/* Step 1, turning Calypso on, as in the app: the screen frosts over, a lilac flower opens in the
+   middle and turns a little, then folds shut into a bud as its two green leaves close, and the bud
+   tucks up into the island (main.js shows "Calypso on" there once it lands). About two seconds. */
+.curtain { position: absolute; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
+.curtain::before { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, .2); -webkit-backdrop-filter: blur(.5em) saturate(1.3); backdrop-filter: blur(.5em) saturate(1.3); opacity: 0; }
+.curtain::after { content: ""; position: absolute; left: 50%; top: 50%; width: 18em; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: radial-gradient(closest-side, rgba(191, 158, 255, .55), transparent); opacity: 0; }
+.bloom { position: absolute; left: 50%; top: 50%; width: 9em; translate: -50% -50%; overflow: visible; opacity: 0; filter: drop-shadow(0 .2em .35em rgba(0, 0, 0, .25)); }
+.bloom-cap { position: absolute; left: 50%; top: calc(50% + 5.6em); translate: -50% -50%; font: 600 .95em ui-rounded, var(--ui); color: rgba(255, 255, 255, .92); text-shadow: 0 0 .5em rgba(0, 0, 0, .3); opacity: 0; }
+.inc-screen[data-active="1"] .curtain::before { animation: frost 2.05s both; }
+.inc-screen[data-active="1"] .curtain::after { animation: bloom-glow 2.05s both; }
+.inc-screen[data-active="1"] .bloom { animation: bloom-move 2.05s both; }
+.inc-screen[data-active="1"] .bl-spin { animation: bloom-spin 1.5s ease-in-out both; }
+.inc-screen[data-active="1"] .bloom use { animation: petal 2.05s both; }
+.inc-screen[data-active="1"] .bloom .bl-leaf { animation-name: leaf; }
+.inc-screen[data-active="1"] .bl-heart { animation: heart 2.05s both; }
+.inc-screen[data-active="1"] .bloom-cap { animation: bloom-cap 2.05s both; }
+@keyframes frost { 0% { opacity: 0; } 17%, 68% { opacity: 1; } 93%, 100% { opacity: 0; } }
+@keyframes bloom-glow {
+  0% { opacity: 0; scale: .55; animation-timing-function: cubic-bezier(.3, 1.2, .5, 1); }
+  34% { opacity: 1; scale: 1.1; }
+  41% { opacity: 1; scale: 1.1; animation-timing-function: ease-out; }
+  68% { opacity: .12; scale: .62; animation-timing-function: ease-in; }
+  85%, 100% { opacity: 0; scale: .55; }
+}
+@keyframes bloom-move {
+  0% { top: 50%; scale: .82; opacity: 0; animation-timing-function: cubic-bezier(.3, 1.3, .5, 1); }
+  34% { top: 50%; scale: 1; opacity: 1; }
+  68% { top: 50%; scale: 1; opacity: 1; animation-timing-function: cubic-bezier(.25, .85, .35, 1); }
+  78% { opacity: 1; }
+  95%, 100% { top: 1em; scale: .16; opacity: 0; }
+}
+@keyframes bloom-spin { from { rotate: 0deg; } to { rotate: 18deg; } }
+/* Each petal turns between where it sits in the bud (--bud) and fully open (--bloom). */
+@keyframes petal {
+  0% { rotate: calc((var(--bud) + var(--bloom)) / 2); scale: .89 .95; animation-timing-function: cubic-bezier(.3, 1.3, .5, 1); }
+  34% { rotate: var(--bloom); scale: 1; }
+  41% { rotate: var(--bloom); scale: 1; animation-timing-function: cubic-bezier(.35, 0, .25, 1.06); }
+  71%, 100% { rotate: var(--bud); scale: .78 .9; }
+}
+@keyframes leaf {
+  0% { rotate: calc((var(--bud) + var(--bloom)) / 2); animation-timing-function: cubic-bezier(.3, 1.3, .5, 1); }
+  34% { rotate: var(--bloom); }
+  41% { rotate: var(--bloom); animation-timing-function: cubic-bezier(.35, 0, .25, 1.06); }
+  71%, 100% { rotate: var(--bud); }
+}
+@keyframes heart {
+  0% { scale: .6; opacity: .55; animation-timing-function: cubic-bezier(.3, 1.3, .5, 1); }
+  34% { scale: 1; opacity: 1; }
+  41% { scale: 1; opacity: 1; animation-timing-function: ease-in-out; }
+  71%, 100% { scale: .3; opacity: 0; }
+}
+@keyframes bloom-cap {
+  0%, 10% { opacity: 0; filter: blur(4px); }
+  29%, 68% { opacity: 1; filter: none; }
+  85%, 100% { opacity: 0; filter: blur(4px); }
+}
 
 /* The answer-history card. */
 .viz-history { display: grid; place-items: center; background: var(--desk); }
@@ -766,7 +919,7 @@ kbd {
 .mm { position: absolute; left: 50%; top: 26%; translate: -50% 0; width: min(22em, 80%); padding: .8em 2.4em .8em 1em; border-radius: .7em; background: var(--win); box-shadow: 0 0 0 1px var(--rule), 0 1.2em 2.4em -.8em rgba(20, 16, 34, .45); }
 .mm span { position: absolute; right: .9em; top: 50%; translate: 0 -50%; color: var(--ink-2); }
 .lay .ib { top: 28%; opacity: .62; }
-.lay .corner { opacity: 1; transform: none; }
+.lay-screen[data-active="1"] .qi { opacity: .7; }
 .vis-tag { position: absolute; left: 50%; top: calc(28% + 3.6em); translate: -50% 0; padding: .3em .7em; border-radius: .4em; background: var(--win); box-shadow: var(--shadow); font-size: .8em; color: var(--ink-2); }
 
 /* Field notes on the features page: a sticky heading beside each group. */
@@ -788,6 +941,13 @@ kbd {
 .mini td { padding: 8px 0; border-top: 1px solid var(--rule); vertical-align: top; }
 .mini td:first-child { width: 46%; padding-right: 14px; }
 .mini td:last-child { color: var(--ink-2); }
+.cmd { font: .9em var(--mono); color: var(--lilac); white-space: nowrap; }
+.mini.cmds td:first-child { width: 32%; }
+/* The island, three ways: each one hangs from its own hairline, the top edge of a screen. */
+.isl-spec { position: relative; padding-top: 3.2em; border-top: 1px solid var(--rule); font: 11px/1.4 var(--ui); }
+.isl-spec + .isl-spec { margin-top: 12px; }
+.isl-spec.tall { padding-top: 7em; }
+.spec-l { display: block; font: .68rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
 
 /* The menu-bar menu mockup. */
 .menu { margin: 0 0 30px; font: 13px/1.3 var(--ui); color: var(--win-ink); max-width: 420px; }
@@ -864,8 +1024,12 @@ kbd {
   .statement .pin, .compare .pin { position: static; height: auto; padding-block: 72px; }
   .how-screen[data-active="1"] .flash, .flash.go { animation: none; }
   .caret, .spin, .cx-type::after, .inc-caret, .vz-bar, .vz-slider i, .viz-apps li, .scene.on, .how-screen .fix { animation: none; }
-  .inc-screen[data-active="3"] .corner .spin { display: none; }
-  .inc-screen[data-active="3"] .corner .inc-done { opacity: 1; }
-  .inc-bar, .inc-vis, .inc-vis i, .btn, .demo-bar, .demo-pill, .compare li, .compare-end, .old li .t, .story-step, .lay, .cx-box, .ib { transition: none; }
+  .inc-bar, .inc-vis, .inc-vis i, .inc-pad, .inc-screen .win-body, .btn, .demo-bar, .qi, .compare li, .compare-end, .old li .t, .story-step, .lay, .cx-box, .ib { transition: none; }
   .hk { animation: none; }
+  /* As in the app with Reduce Motion: no flower, no colour rim, nothing bouncing. */
+  .curtain, .isl::before, .isl::after { display: none; }
+  .isl, .isl-body, .isl-more { transition: none; }
+  .isl-row > span > *, .isl[data-s="work"] .ic-bud, .qi.swap > *, .qi-ico i { animation: none; }
+  .isl-bars i { animation: none; height: .675em; }
+  .qi-ico i { opacity: .8; }
 }

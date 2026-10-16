@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=202610161619">
+  <link rel="stylesheet" href="styles.css?v=202610161638">
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -67,8 +67,8 @@
             <article class="story-step" data-step>
               <p class="story-num fig">fig. 2</p>
               <h3>Calypso.</h3>
-              <p class="story-text">The incognito mode, and my favourite. It's a thin dark strip with no buttons or chat history. Type your question, press Return, and the strip disappears while a small mark in a corner of the screen tells you when the answer's ready.</p>
-              <p class="story-detail">Visibility goes from 5% to 100%, and you pick which corner the mark sits in. It's discreet, not invisible: screen sharing and recordings still show it.</p>
+              <p class="story-text">The incognito mode, and my favourite. It's a thin dark strip with no buttons or chat history. Type your question, press Return, and the strip disappears while a small island at the top of the screen tells you when the answer's ready.</p>
+              <p class="story-detail">Visibility goes from 5% to 100% and applies to the island too. It's discreet, not invisible: screen sharing and recordings still show it.</p>
             </article>
             <article class="story-step" data-step>
               <p class="story-num fig">fig. 3</p>
@@ -90,7 +90,7 @@
           <div class="story-stick">
             <div class="screen-frame">
               <div class="screen lay-screen" data-step-screen data-active="1" aria-hidden="true">
-                <div class="mbar"><b>Notes</b><span class="mbar-right"><span class="mb-bud"></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/></svg><span>Thu 9:41</span></span></div>
+                <div class="mbar"><b>Notes</b><span class="mbar-right"><span class="mb-bud"></span><span class="mb-sun"></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/></svg><span>Thu 9:41</span></span></div>
                 <div class="win">
                   <div class="win-bar"><i></i><i></i><i></i><span>Week 6 notes</span></div>
                   <div class="win-body"><div class="doc-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
@@ -119,10 +119,10 @@ WHERE total &gt; 100;</pre><span class="sb-copy">Copy</span></div>
                 </div>
 
                 <div class="lay" data-n="1">
-                  <div class="ib"><span>give me a hint</span><span class="ib-tag">+1 screenshot</span></div>
+                  <div class="ib"><span>give me a hint</span><span class="ib-tag">+1 file</span></div>
                   <div class="vis-tag">Visibility · 35%</div>
-                  <div class="corner"><span class="spin"></span></div>
                 </div>
+                <div class="qi"><span class="qi-ico" data-i="dots"><i></i><i></i><i></i></span><span class="qi-t">Thinking</span></div>
               </div>
             </div>
           </div>
@@ -141,7 +141,7 @@ WHERE total &gt; 100;</pre><span class="sb-copy">Copy</span></div>
         <div class="group" id="menu-bar">
           <div class="group-head"><h3>In the menu bar</h3></div>
           <div>
-            <figure class="menu" aria-label="The Calyx menu with recent answers" data-reveal>
+            <figure class="menu" aria-label="The Calyx menu with recent answers and what you've spent" data-reveal>
               <div class="menu-bar" aria-hidden="true"><span class="mb-bud"></span><span class="menu-clock">Thu 9:41</span></div>
               <ul class="menu-list" aria-hidden="true">
                 <li class="menu-head">Recent answers</li>
@@ -150,6 +150,8 @@ WHERE total &gt; 100;</pre><span class="sb-copy">Copy</span></div>
                 <li>escaped the dot in regex <span>1h</span></li>
                 <li class="menu-sep"></li>
                 <li>Show Editor <span>⌥Space</span></li>
+                <li class="menu-sep"></li>
+                <li>Today $0.04 · This month $1.82</li>
                 <li>Settings… <span>⌘,</span></li>
               </ul>
             </figure>
@@ -161,6 +163,11 @@ WHERE total &gt; 100;</pre><span class="sb-copy">Copy</span></div>
               <div class="note">
                 <h4>You can tell when it's offline.</h4>
                 <p><span class="net" aria-hidden="true"><span class="mb-bud"></span><span class="mb-bud off"></span></span>The bud icon turns grey when there's no connection.</p>
+              </div>
+              <div class="note">
+                <h4>What it's costing you.</h4>
+                <p>The menu shows what today and this month have cost so far. Settings › Spending adds a chart of the last two weeks and a split by model. It's an estimate, worked out from the tokens each answer used and Anthropic's list prices.</p>
+                <p class="fine">Set a monthly budget and the island lets you know at 80% and again at 100%. Nothing gets blocked, and it all stays on your Mac. It counts ChatGPT answers but can't price them.</p>
               </div>
               <div class="note">
                 <h4>Settings are here too.</h4>
@@ -219,6 +226,19 @@ WHERE total &gt; 100;</pre><span class="sb-copy">Copy</span></div>
               </div>
             </div>
             <div class="note">
+              <h4>Slash commands.</h4>
+              <p>Start a question with a slash to change things for just that question. <span class="cmd">/fix</span> or <span class="cmd">/reply</span> picks the prompt, <span class="cmd">/opus</span> or <span class="cmd">/haiku</span> picks the model, and you can stack them. Type <span class="cmd">/</span> on its own and the whole list pops up. Commands it knows turn lilac as you type.</p>
+              <div class="detail">
+                <table class="mini cmds">
+                  <tbody>
+                    <tr><td>Pick the prompt</td><td><span class="cmd">/answer</span> <span class="cmd">/fix</span> <span class="cmd">/explain</span> <span class="cmd">/sum</span> <span class="cmd">/rewrite</span> <span class="cmd">/reply</span> <span class="cmd">/translate</span>, or one of your own prompts by name</td></tr>
+                    <tr><td>Pick the model</td><td><span class="cmd">/opus</span> <span class="cmd">/sonnet</span> <span class="cmd">/haiku</span> <span class="cmd">/fable</span> <span class="cmd">/gpt</span> <span class="cmd">/mac</span></td></tr>
+                    <tr><td>Do it right away</td><td><span class="cmd">/shot</span> takes a screenshot, <span class="cmd">/clear</span> drops the attachments, <span class="cmd">/new</span> starts a new chat and <span class="cmd">/calypso</span> turns Calypso on or off</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="note">
               <h4>Context files.</h4>
               <p>Got something you always want it to refer to, like your notes or your CV? Attach it once and Calyx can include it with your questions.</p>
             </div>
@@ -251,6 +271,16 @@ WHERE total &gt; 100;</pre><span class="sb-copy">Copy</span></div>
             <div class="note">
               <h4>It can paste for you.</h4>
               <p><kbd>⌃⇧Space</kbd> sends your question and types the answer into the text field you were using, so you skip the paste step too.</p>
+            </div>
+            <div class="note">
+              <h4>The island.</h4>
+              <p>While Calyx works in the background, a small black island at the top of your screen keeps you posted: how many screenshots you've taken, a little animation while it thinks, then a few words about the answer. On a MacBook with a notch it grows out of the notch. Your clicks go straight through it.</p>
+              <div class="detail" aria-hidden="true">
+                <div class="isl-spec"><div class="isl" data-s="shot"><div class="isl-body"><div class="isl-row"><span><i class="ic-cam"></i><i class="ic-bud"></i><i class="ic-ok"></i></span><span><b class="isl-n">2</b><span class="isl-bars"><i></i><i></i><i></i><i></i></span><span class="isl-cap"></span></span></div><div class="isl-more"><div><p class="isl-msg"></p></div></div></div></div><span class="spec-l">Two screenshots taken</span></div>
+                <div class="isl-spec"><div class="isl" data-s="work"><div class="isl-body"><div class="isl-row"><span><i class="ic-cam"></i><i class="ic-bud"></i><i class="ic-ok"></i></span><span><b class="isl-n"></b><span class="isl-bars"><i></i><i></i><i></i><i></i></span><span class="isl-cap"></span></span></div><div class="isl-more"><div><p class="isl-msg"></p></div></div></div></div><span class="spec-l">Thinking</span></div>
+                <div class="isl-spec tall"><div class="isl" data-s="done"><div class="isl-body"><div class="isl-row"><span><i class="ic-cam"></i><i class="ic-bud"></i><i class="ic-ok"></i></span><span><b class="isl-n"></b><span class="isl-bars"><i></i><i></i><i></i><i></i></span><span class="isl-cap">Pasted</span></span></div><div class="isl-more"><div><p class="isl-msg">use a set to track repeats</p></div></div></div></div><span class="spec-l">The answer, pasted</span></div>
+              </div>
+              <p class="fine">If you'd rather have something smaller, Settings › General swaps it for a little tag in a corner of the screen.</p>
             </div>
             <div class="note">
               <h4>Esc twice resets your Wi-Fi.</h4>
@@ -292,6 +322,7 @@ WHERE total &gt; 100;</pre><span class="sb-copy">Copy</span></div>
             <tr><td><kbd>Return</kbd> · <kbd>⇧Return</kbd></td><td>Send · new line</td></tr>
             <tr><td><kbd>Esc</kbd></td><td>Hide the Editor</td></tr>
             <tr><td><kbd>Esc</kbd> <kbd>Esc</kbd></td><td>Switch Wi-Fi off and put Calyx away (<kbd>⌥Space</kbd> brings both back)</td></tr>
+            <tr><td><kbd>/</kbd></td><td>Slash commands, at the start of a question</td></tr>
           </tbody>
         </table>
         <p class="fine">Don't like the shortcuts? Change the first three in Settings › Shortcuts.</p>
@@ -357,6 +388,6 @@ WHERE total &gt; 100;</pre><span class="sb-copy">Copy</span></div>
     </div>
   </footer>
 
-  <script src="main.js?v=202610161619"></script>
+  <script src="main.js?v=202610161638"></script>
 </body>
 </html>
