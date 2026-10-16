@@ -272,6 +272,7 @@ update();
   }
 
   async function play(name, instant = still) {
+    if (!SCENES[name]) name = ORDER[0];   // a page and script from different versions
     const id = ++run;
     tabs.forEach((t) => t.setAttribute("aria-pressed", String(t.dataset.scene === name)));
     stage.dataset.active = name;
