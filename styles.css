@@ -823,6 +823,7 @@ kbd {
   .js [data-reveal] { opacity: 1; translate: none; scale: none; transition: none; }
   .statement, .compare { height: auto; }
   .statement .pin, .compare .pin { position: static; height: auto; padding-block: 72px; }
+  .how-screen[data-active="1"] .flash, .flash.go { animation: none; }
   .caret, .spin, .cx-type::after, .inc-caret, .vz-bar, .vz-slider i, .viz-apps li, .scene.on, .how-screen .fix { animation: none; }
   .inc-screen[data-active="3"] .corner .spin { display: none; }
   .inc-screen[data-active="3"] .corner .inc-done { opacity: 1; }

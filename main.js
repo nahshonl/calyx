@@ -49,7 +49,7 @@ document.querySelectorAll("[data-words]").forEach((el) => {
   }
 });
 
-// The way into Incognito (index.html). As the section scrolls past, its sentence is redacted word
+// The way into Calypso, the incognito mode (index.html). As the section scrolls past, its sentence is redacted word
 // by word and the page darkens; the bars slide together into one strip that types "ask without
 // a trace"; a visibility readout counts it down from 100% to 5% and it's gone; then the Greek
 // word behind the name appears letter by letter. Every step is a function of scroll position.
@@ -92,7 +92,7 @@ document.querySelectorAll("[data-words]").forEach((el) => {
     if (flat) { sec.style.backgroundColor = ""; return; }
     if (!sec.classList.contains("ready")) requestAnimationFrame(() => requestAnimationFrame(() => sec.classList.add("ready")));
 
-    // The page darkens into the Incognito section's black.
+    // The page darkens into the Calypso section's black.
     const from = rgb(getComputedStyle(document.body).backgroundColor);
     const k = span(p, 0.2, 0.44);
     sec.style.backgroundColor = `rgb(${from.map((c, i) => Math.round(mix(c, DARK[i], k))).join(",")})`;
@@ -160,7 +160,7 @@ const stories = [...document.querySelectorAll("[data-steps]")].map((g) => ({
   steps: [...g.querySelectorAll("[data-step]")],
   screen: g.querySelector("[data-step-screen]"),
   cumulative: g.hasAttribute("data-cumulative"),
-  active: -1,
+  active: -2,   // forces the first update to set the screen's starting state
 }));
 
 // The features page's sticky section links highlight the section you're reading.
@@ -200,7 +200,9 @@ function update() {
   }
 
   for (const s of stories) {
-    let a = 0;
+    // Nothing is active until the first step reaches the middle of the window, so step 1's
+    // animation (the screenshot flash) plays while you're looking at it, not on page load.
+    let a = -1;
     s.steps.forEach((st, i) => { if (st.getBoundingClientRect().top < innerHeight * 0.55) a = i; });
     if (a === s.active) continue;
     s.active = a;
@@ -229,7 +231,7 @@ addEventListener("scroll", queue, { passive: true });
 addEventListener("resize", () => { tracked.forEach((t) => { t.p = -1; }); queue(); });
 update();
 
-// ------------------------------------------------------------ the hero's Incognito bar
+// ------------------------------------------------------------ the hero's Calypso bar
 // Type a question, vanish, show the corner indicator, repeat.
 (() => {
   const bar = document.getElementById("demoBar");
