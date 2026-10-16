@@ -15,7 +15,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=202610161522">
+  <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&text=%CE%BA%CE%B1%CE%BB%CF%8D%CF%80%CF%84%CF%89&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=202610161548">
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -97,6 +98,60 @@
       <div class="pin">
         <div class="wrap">
           <p class="statement-text" data-words>You already know how to copy and paste. Calyx slips an AI in between, <em>so what comes out the other end is the answer.</em> You never open a chat window, and you can keep it faint enough that it doesn't take over your screen.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works: the screen sticks while the three steps scroll past it. -->
+    <section class="how" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="sec-head center">
+          <h2 class="title" id="how-title" data-reveal>It's pretty simple</h2>
+        </div>
+        <div class="story" data-steps data-cumulative>
+          <div class="story-steps">
+            <article class="story-step" data-step>
+              <p class="story-num">Step 1</p>
+              <p class="story-keys"><kbd>⌃Space</kbd></p>
+              <h3>Screenshot it.</h3>
+              <p class="story-text">Grab whatever you're stuck on, whether that's a bug, a quiz question or an email. Calyx leaves itself out of the shot.</p>
+            </article>
+            <article class="story-step" data-step>
+              <p class="story-num">Step 2</p>
+              <p class="story-keys"><kbd>⌃⇧Space</kbd></p>
+              <h3>Send it.</h3>
+              <p class="story-text">No window opens and you don't have to type anything. If you do want to ask something specific, press <kbd>⌥Space</kbd> first and add a question.</p>
+            </article>
+            <article class="story-step" data-step>
+              <p class="story-num">Step 3</p>
+              <p class="story-keys"><kbd>⌘V</kbd></p>
+              <h3>Paste the answer.</h3>
+              <p class="story-text">The whole fix is already on your clipboard, so paste it in and keep going.</p>
+            </article>
+          </div>
+          <div class="story-stick">
+            <div class="screen-frame">
+              <div class="screen how-screen" data-step-screen aria-hidden="true">
+                <div class="mbar"><b>Code</b><span class="mbar-right"><span class="mb-bud"></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/></svg><span>Thu 9:41</span></span></div>
+                <div class="win">
+                  <div class="win-bar"><i></i><i></i><i></i><span>practice.py</span></div>
+                  <div class="win-body">
+                    <div class="code">
+                      <div><b>1</b>items = ["a", "b", "c"]</div>
+                      <div><b>2</b></div>
+                      <div class="fix"><b>3</b><span class="was">for i in range(len(items) - 1):</span><span class="now">for i in range(len(items)):</span></div>
+                      <div><b>4</b>    print(items[i])</div>
+                      <div><b>5</b></div>
+                      <div><b>6</b><em># prints a, b ... where's c?</em></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="corner"><span class="hc1">Screenshot 1</span><span class="hc2">✓ Copied · range stops before the end</span></div>
+                <div class="kc hw-keys"><span class="hk hk1">⌃ Space</span><span class="hk hk2">⌃ ⇧ Space</span><span class="hk hk3">⌘ V</span></div>
+                <div class="flash"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -230,6 +285,25 @@
       </div>
     </section>
 
+    <!-- Into Incognito: the sentence gets redacted word by word, the bars slide together into one
+         strip (the Incognito bar), the strip turns down to 5% and goes. Driven by scroll in main.js. -->
+    <section class="redact flat" data-progress="pin" aria-label="Into Incognito mode">
+      <div class="pin">
+        <div class="wrap">
+          <p class="redact-text" data-redact>Every question leaves a tab, a window and a chat history behind.</p>
+        </div>
+        <div class="redact-bars" aria-hidden="true"></div>
+        <div class="redact-strip" data-text="ask without a trace" aria-hidden="true"></div>
+        <p class="redact-vis" aria-hidden="true">Visibility <b>100%</b></p>
+        <div class="redact-tick" aria-hidden="true">✓ Copied</div>
+        <div class="redact-greek">
+          <p class="redact-word" lang="el" aria-label="kalyptō"><span>κ</span><span>α</span><span>λ</span><span>ύ</span><span>π</span><span>τ</span><span>ω</span></p>
+          <p class="redact-gloss">kalyptō · Greek for "to conceal"</p>
+          <p class="redact-note">Calyx comes from the same Greek root. So does Calypso, "she who conceals", who kept Odysseus on her island for seven years.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Incognito: the screen sticks while the bar turns faint and then disappears. -->
     <section class="inc" id="incognito" aria-labelledby="inc-title">
       <div class="wrap">
@@ -271,60 +345,6 @@
                 <div class="ib inc-bar"><span>make this paragraph shorter<span class="inc-caret"></span></span><span class="ib-tag">+1 screenshot</span></div>
                 <div class="inc-vis"><span>Visibility</span><b><i></i></b><span class="inc-pct">15%</span></div>
                 <div class="corner"><span class="spin"></span><span class="inc-done">✓ Copied · cut it to two sentences</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How it works: the screen sticks while the three steps scroll past it. -->
-    <section class="how" id="how" aria-labelledby="how-title">
-      <div class="wrap">
-        <div class="sec-head center">
-          <h2 class="title" id="how-title" data-reveal>It's pretty simple</h2>
-        </div>
-        <div class="story" data-steps data-cumulative>
-          <div class="story-steps">
-            <article class="story-step" data-step>
-              <p class="story-num">Step 1</p>
-              <p class="story-keys"><kbd>⌃Space</kbd></p>
-              <h3>Screenshot it.</h3>
-              <p class="story-text">Grab whatever you're stuck on, whether that's a bug, a quiz question or an email. Calyx leaves itself out of the shot.</p>
-            </article>
-            <article class="story-step" data-step>
-              <p class="story-num">Step 2</p>
-              <p class="story-keys"><kbd>⌃⇧Space</kbd></p>
-              <h3>Send it.</h3>
-              <p class="story-text">No window opens and you don't have to type anything. If you do want to ask something specific, press <kbd>⌥Space</kbd> first and add a question.</p>
-            </article>
-            <article class="story-step" data-step>
-              <p class="story-num">Step 3</p>
-              <p class="story-keys"><kbd>⌘V</kbd></p>
-              <h3>Paste the answer.</h3>
-              <p class="story-text">The whole fix is already on your clipboard, so paste it in and keep going.</p>
-            </article>
-          </div>
-          <div class="story-stick">
-            <div class="screen-frame">
-              <div class="screen how-screen" data-step-screen aria-hidden="true">
-                <div class="mbar"><b>Code</b><span class="mbar-right"><span class="mb-bud"></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.6 10 9.3a3 3 0 0 0-4 0Z"/><path d="M3.6 6.5a6.4 6.4 0 0 1 8.8 0l-1.3 1.5a4.4 4.4 0 0 0-6.2 0Z"/><path d="M1 3.6a10 10 0 0 1 14 0l-1.3 1.5a8 8 0 0 0-11.4 0Z"/></svg><span>Thu 9:41</span></span></div>
-                <div class="win">
-                  <div class="win-bar"><i></i><i></i><i></i><span>practice.py</span></div>
-                  <div class="win-body">
-                    <div class="code">
-                      <div><b>1</b>items = ["a", "b", "c"]</div>
-                      <div><b>2</b></div>
-                      <div class="fix"><b>3</b><span class="was">for i in range(len(items) - 1):</span><span class="now">for i in range(len(items)):</span></div>
-                      <div><b>4</b>    print(items[i])</div>
-                      <div><b>5</b></div>
-                      <div><b>6</b><em># prints a, b ... where's c?</em></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="corner"><span class="hc1">Screenshot 1</span><span class="hc2">✓ Copied · range stops before the end</span></div>
-                <div class="kc hw-keys"><span class="hk hk1">⌃ Space</span><span class="hk hk2">⌃ ⇧ Space</span><span class="hk hk3">⌘ V</span></div>
-                <div class="flash"></div>
               </div>
             </div>
           </div>
@@ -502,6 +522,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=202610161522"></script>
+  <script src="main.js?v=202610161548"></script>
 </body>
 </html>

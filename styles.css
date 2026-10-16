@@ -506,6 +506,49 @@ kbd {
 .how-screen.s3 .fix { animation: hl 1.8s ease-out; }
 @keyframes hl { 0%, 35% { background: color-mix(in srgb, var(--lilac-wash) 45%, transparent); } 100% { background: transparent; } }
 
+/* Into Incognito: a sentence is redacted word by word, the bars slide together into one strip,
+   the strip turns down to nothing, and the Greek word behind the name appears. All of it is
+   driven by scroll position in main.js, so it runs backwards when you scroll back up. */
+.redact { position: relative; height: 480vh; }
+.redact .pin { overflow: hidden; }
+.redact-text { font-family: var(--display); font-size: clamp(1.9rem, 4.4vw, 3.5rem); line-height: 1.25; letter-spacing: -.01em; max-width: 18em; }
+.redact-bars { position: absolute; inset: 0; pointer-events: none; }
+.redact-bars i {
+  position: absolute; left: 0; top: 0;
+  background: rgba(11, 10, 18, .94); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+  border-radius: 3px; transform-origin: left center; transform: scaleX(0);
+}
+.redact-strip {
+  position: absolute; display: flex; align-items: center; padding: 0 18px;
+  color: rgba(255, 255, 255, .85); font: 17px/1 var(--ui); white-space: pre;
+  pointer-events: none; opacity: 0;
+}
+.redact-strip.typing::after { content: ""; width: 1.5px; height: 1.1em; margin-left: 1px; background: currentColor; animation: blink 1s steps(1) infinite; }
+.redact-vis { position: absolute; left: 0; right: 0; text-align: center; font: .8rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #ABA4BE; opacity: 0; }
+.redact-vis b { font-weight: 400; color: #ECE6FF; }
+.redact-tick {
+  position: absolute; right: 24px; bottom: 24px; padding: 8px 13px; border-radius: 999px;
+  background: rgba(11, 10, 18, .86); color: rgba(255, 255, 255, .85); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+  font: 13px var(--ui); opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s;
+}
+.redact-tick.on { opacity: 1; transform: none; }
+.redact-greek { position: absolute; inset: var(--nav-h) 0 0; display: grid; place-content: center; justify-items: center; gap: 16px; padding-inline: var(--gutter); text-align: center; pointer-events: none; }
+.redact-word { font: 400 clamp(3.6rem, 12vw, 9rem)/1 "GFS Didot", Georgia, "Times New Roman", serif; letter-spacing: .03em; color: #ECE6FF; }
+.redact-word span { display: inline-block; opacity: 0; filter: blur(12px); translate: 0 .18em; }
+.redact.ready .redact-word span { transition: opacity .7s, filter .7s, translate .7s var(--ease); }
+.redact-word span.on { opacity: 1; filter: none; translate: none; }
+.redact-gloss { font: .82rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #9DAE86; opacity: 0; }
+.redact-note { max-width: 31rem; font: italic 1.2rem/1.45 var(--body); color: #ABA4BE; opacity: 0; text-wrap: balance; }
+.redact.ready .redact-gloss, .redact.ready .redact-note { transition: opacity .7s; }
+.redact-gloss.on, .redact-note.on { opacity: 1; }
+/* No scroll-driven version (reduced motion, short windows): a redacted sentence above the word. */
+.redact.flat { height: auto; background: #13111A; }
+.redact.flat .pin { position: relative; height: auto; display: block; padding-block: calc(var(--nav-h) + 72px) 96px; }
+.redact.flat .rw { color: transparent; background: rgba(11, 10, 18, .94); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.redact.flat .redact-bars, .redact.flat .redact-strip, .redact.flat .redact-vis, .redact.flat .redact-tick { display: none; }
+.redact.flat .redact-greek { position: static; margin-top: 72px; }
+.redact.flat .redact-word span, .redact.flat .redact-gloss, .redact.flat .redact-note { opacity: 1; filter: none; translate: none; transition: none; }
+
 /* Incognito: a dark section whatever the theme, with the bar fading out as you scroll. */
 .inc {
   --board: #13111A; --sheet: #1C1926; --card: #1C1926;

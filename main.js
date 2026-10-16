@@ -49,6 +49,97 @@ document.querySelectorAll("[data-words]").forEach((el) => {
   }
 });
 
+// The way into Incognito (index.html). As the section scrolls past, its sentence is redacted word
+// by word and the page darkens; the bars slide together into one strip that types "ask without
+// a trace"; a visibility readout counts it down from 100% to 5% and it's gone; then the Greek
+// word behind the name appears letter by letter. Every step is a function of scroll position.
+(() => {
+  const sec = document.querySelector(".redact");
+  if (!sec) return;
+  const pin = sec.querySelector(".pin");
+  const text = sec.querySelector("[data-redact]");
+  const strip = sec.querySelector(".redact-strip");
+  const vis = sec.querySelector(".redact-vis");
+  const visNum = vis.querySelector("b");
+  const tick = sec.querySelector(".redact-tick");
+  const letters = [...sec.querySelectorAll(".redact-word span")];
+  const gloss = sec.querySelector(".redact-gloss");
+  const note = sec.querySelector(".redact-note");
+  const STRIP = strip.dataset.text;
+  const DARK = [19, 17, 26];
+
+  const words = text.textContent.trim().split(/\s+/);
+  text.textContent = "";
+  const spans = words.map((w, i) => {
+    const sp = document.createElement("span");
+    sp.className = "rw";
+    sp.textContent = w;
+    text.append(sp);
+    if (i < words.length - 1) text.append(" ");
+    return sp;
+  });
+  const bars = spans.map(() => sec.querySelector(".redact-bars").appendChild(document.createElement("i")));
+
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const span = (p, a, b) => clamp((p - a) / (b - a));
+  const mix = (a, b, t) => a + (b - a) * t;
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const rgb = (c) => (c.match(/\d+(\.\d+)?/g) || [0, 0, 0]).slice(0, 3).map(Number);
+
+  sec._progress = (p) => {
+    const flat = still || innerHeight < 640;
+    sec.classList.toggle("flat", flat);
+    if (flat) { sec.style.backgroundColor = ""; return; }
+    if (!sec.classList.contains("ready")) requestAnimationFrame(() => requestAnimationFrame(() => sec.classList.add("ready")));
+
+    // The page darkens into the Incognito section's black.
+    const from = rgb(getComputedStyle(document.body).backgroundColor);
+    const k = span(p, 0.2, 0.44);
+    sec.style.backgroundColor = `rgb(${from.map((c, i) => Math.round(mix(c, DARK[i], k))).join(",")})`;
+
+    const box = pin.getBoundingClientRect();
+    const navH = parseFloat(getComputedStyle(pin).paddingTop) || 0;
+    const tw = Math.min(560, box.width * 0.84), th = box.width < 600 ? 46 : 54;
+    const tx = (box.width - tw) / 2, ty = navH + (box.height - navH) / 2 - th / 2;
+
+    // Strip opacity: solid, then turned down to 5%, then gone.
+    const dim = span(p, 0.57, 0.68), gone = span(p, 0.68, 0.71);
+    const op = mix(1, 0.05, dim) * (1 - gone);
+
+    const n = spans.length;
+    spans.forEach((sp, i) => {
+      const r = sp.getBoundingClientRect();
+      const s = span(p, 0.05 + i * (0.22 / n), 0.05 + i * (0.22 / n) + 0.05);   // redaction sweep
+      const e = ease(span(p, 0.34 + i * 0.003, 0.47 + i * 0.003));                // slide into the strip
+      const x = mix(r.left - box.left - 4, tx, e), y = mix(r.top - box.top + r.height * 0.06, ty, e);
+      const w = mix(r.width + 8, tw, e), h = mix(r.height * 0.88, th, e);
+      const b = bars[i];
+      b.style.left = x + "px"; b.style.top = y + "px"; b.style.width = w + "px"; b.style.height = h + "px";
+      b.style.borderRadius = mix(3, 10, e) + "px";
+      b.style.transform = `scaleX(${e > 0 ? 1 : s})`;
+      b.style.opacity = op;
+      sp.style.opacity = s >= 1 ? 0 : 1;
+    });
+
+    // The merged strip types its line, then fades with the bars.
+    const typed = Math.round(STRIP.length * span(p, 0.49, 0.56));
+    strip.textContent = STRIP.slice(0, typed);
+    strip.classList.toggle("typing", p > 0.48 && p < 0.57);
+    Object.assign(strip.style, { left: tx + "px", top: ty + "px", width: tw + "px", height: th + "px", opacity: p > 0.48 ? op : 0 });
+
+    vis.style.top = ty + th + 18 + "px";
+    vis.style.opacity = span(p, 0.55, 0.57) * (1 - gone);
+    visNum.textContent = Math.round(mix(100, 5, dim)) + "%";
+
+    tick.classList.toggle("on", p > 0.7 && p < 0.79);
+
+    // The word behind the name.
+    letters.forEach((l, i) => l.classList.toggle("on", p > 0.8 + i * 0.018));
+    gloss.classList.toggle("on", p > 0.9);
+    note.classList.toggle("on", p > 0.94);
+  };
+})();
+
 // [data-progress] elements get --p from 0 to 1:
 //   exit  - 0 while the element sits at the top of the window, 1 once it has scrolled off
 //   enter - 0 as the element's top reaches the bottom of the window, 1 when it's 30% from the top
@@ -99,6 +190,7 @@ function update() {
     if (p === t.p) continue;
     t.p = p;
     t.el.style.setProperty("--p", p.toFixed(4));
+    if (t.el._progress) t.el._progress(p);
     for (const c of t.at) c.classList.toggle("on", p >= +c.dataset.at);
     for (const c of t.done) c.classList.toggle("done", p >= +c.dataset.done);
     if (t.words.length) {
@@ -134,7 +226,7 @@ function update() {
 let queued = false;
 const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
 addEventListener("scroll", queue, { passive: true });
-addEventListener("resize", queue);
+addEventListener("resize", () => { tracked.forEach((t) => { t.p = -1; }); queue(); });
 update();
 
 // ------------------------------------------------------------ the hero's Incognito bar
