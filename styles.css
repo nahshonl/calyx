@@ -488,19 +488,9 @@ kbd {
 .code b { display: inline-block; width: 2.2em; font-weight: 400; color: var(--ink-2); opacity: .6; }
 .code em { font-style: normal; color: var(--sage); }
 .code .now { display: none; }
-/* Step 1 flashes a screenshot, step 2 sends it (the question is optional), step 3 pastes the fix.
+/* Step 1 flashes a screenshot, step 2 sends it, step 3 pastes the fix.
    The key for the current step sits at the bottom of the screen. */
 .how-screen[data-active="1"] .flash { animation: flash .5s ease-out; }
-.hw-opt {
-  position: absolute; left: 50%; bottom: 4.6em; translate: -50% 0; z-index: 2;
-  width: min(24em, 80%); padding: .6em .9em; border-radius: .6em;
-  border: 1.5px dashed color-mix(in srgb, var(--win-ink) 30%, transparent);
-  background: color-mix(in srgb, var(--win) 80%, transparent);
-  color: var(--ink-2); font-size: .9em;
-  opacity: 0; transition: opacity .35s;
-}
-.hw-opt-tag { display: block; margin-bottom: .2em; font-size: .78em; letter-spacing: .04em; text-transform: uppercase; color: var(--lilac); }
-.how-screen[data-active="2"] .hw-opt { opacity: 1; }
 .how-screen .corner span { display: none; }
 .how-screen[data-active="1"] .corner, .how-screen.s2 .corner { opacity: 1; transform: none; }
 .how-screen[data-active="1"] .hc1, .how-screen.s2 .hc2 { display: inline; }
@@ -740,6 +730,6 @@ kbd {
   .statement, .compare { height: auto; }
   .statement .pin, .compare .pin { position: static; height: auto; padding-block: 72px; }
   .caret, .spin, .cx-type::after, .vz-bar, .vz-slider i, .viz-apps li, .scene.on, .how-screen .fix { animation: none; }
-  .btn, .demo-bar, .demo-pill, .compare li, .compare-end, .old li .t, .story-step, .lay, .cx-box, .ib, .hw-opt { transition: none; }
+  .btn, .demo-bar, .demo-pill, .compare li, .compare-end, .old li .t, .story-step, .lay, .cx-box, .ib { transition: none; }
   .hk { animation: none; }
 }
