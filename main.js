@@ -49,10 +49,11 @@ document.querySelectorAll("[data-words]").forEach((el) => {
   }
 });
 
-// The way into Calypso, the incognito mode (index.html). As the section scrolls past, its sentence is redacted word
-// by word and the page darkens; the bars slide together into one strip that types "ask without
-// a trace"; a visibility readout counts it down from 100% to 5% and it's gone; then the Greek
-// word behind the name appears letter by letter. Every step is a function of scroll position.
+// The way into Calypso, the incognito mode (index.html). As the section scrolls past, its sentence
+// is redacted word by word and the page darkens; the bars slide together into one strip that types
+// "ask without a trace"; a visibility readout counts it down from 100% to 5% and it's gone. Then
+// καλύπτω appears, turns into "kalyptō" and then "Calypso" letter by letter, and lands on a
+// dictionary page. Every step is a function of scroll position, so it all runs backwards too.
 (() => {
   const sec = document.querySelector(".redact");
   if (!sec) return;
@@ -62,9 +63,18 @@ document.querySelectorAll("[data-words]").forEach((el) => {
   const vis = sec.querySelector(".redact-vis");
   const visNum = vis.querySelector("b");
   const tick = sec.querySelector(".redact-tick");
-  const letters = [...sec.querySelectorAll(".redact-word span")];
-  const gloss = sec.querySelector(".redact-gloss");
-  const note = sec.querySelector(".redact-note");
+  const dict = sec.querySelector(".dict");
+  const slots = [...dict.querySelectorAll(".slot")];
+  const word = dict.querySelector(".dict-word");
+  // Each letter slot stacks its three forms. Size it to the one showing (in em, so it follows the
+  // word's font size) so "Calypso" isn't spaced out to make room for "ω".
+  let widths = null, lastP = 0;
+  const fit = (sl, i, form) => { if (widths) sl.style.width = widths[i][form] + "em"; };
+  document.fonts.ready.then(() => {
+    const fs = parseFloat(getComputedStyle(word).fontSize);
+    widths = slots.map((sl) => Object.fromEntries([...sl.children].map((g) => [g.className, g.getBoundingClientRect().width / fs])));
+    sec._progress(lastP);
+  });
   const STRIP = strip.dataset.text;
   const DARK = [19, 17, 26];
 
@@ -87,14 +97,15 @@ document.querySelectorAll("[data-words]").forEach((el) => {
   const rgb = (c) => (c.match(/\d+(\.\d+)?/g) || [0, 0, 0]).slice(0, 3).map(Number);
 
   sec._progress = (p) => {
+    lastP = p;
     const flat = still || innerHeight < 640;
     sec.classList.toggle("flat", flat);
-    if (flat) { sec.style.backgroundColor = ""; return; }
+    if (flat) { sec.style.backgroundColor = ""; slots.forEach((sl, i) => fit(sl, i, "c")); return; }
     if (!sec.classList.contains("ready")) requestAnimationFrame(() => requestAnimationFrame(() => sec.classList.add("ready")));
 
     // The page darkens into the Calypso section's black.
     const from = rgb(getComputedStyle(document.body).backgroundColor);
-    const k = span(p, 0.2, 0.44);
+    const k = span(p, 0.14, 0.32);
     sec.style.backgroundColor = `rgb(${from.map((c, i) => Math.round(mix(c, DARK[i], k))).join(",")})`;
 
     const box = pin.getBoundingClientRect();
@@ -103,14 +114,14 @@ document.querySelectorAll("[data-words]").forEach((el) => {
     const tx = (box.width - tw) / 2, ty = navH + (box.height - navH) / 2 - th / 2;
 
     // Strip opacity: solid, then turned down to 5%, then gone.
-    const dim = span(p, 0.57, 0.68), gone = span(p, 0.68, 0.71);
+    const dim = span(p, 0.42, 0.5), gone = span(p, 0.5, 0.52);
     const op = mix(1, 0.05, dim) * (1 - gone);
 
     const n = spans.length;
     spans.forEach((sp, i) => {
       const r = sp.getBoundingClientRect();
-      const s = span(p, 0.05 + i * (0.22 / n), 0.05 + i * (0.22 / n) + 0.05);   // redaction sweep
-      const e = ease(span(p, 0.34 + i * 0.003, 0.47 + i * 0.003));                // slide into the strip
+      const s = span(p, 0.03 + i * (0.15 / n), 0.03 + i * (0.15 / n) + 0.035);  // redaction sweep
+      const e = ease(span(p, 0.25 + i * 0.002, 0.34 + i * 0.002));                // slide into the strip
       const x = mix(r.left - box.left - 4, tx, e), y = mix(r.top - box.top + r.height * 0.06, ty, e);
       const w = mix(r.width + 8, tw, e), h = mix(r.height * 0.88, th, e);
       const b = bars[i];
@@ -122,21 +133,27 @@ document.querySelectorAll("[data-words]").forEach((el) => {
     });
 
     // The merged strip types its line, then fades with the bars.
-    const typed = Math.round(STRIP.length * span(p, 0.49, 0.56));
+    const typed = Math.round(STRIP.length * span(p, 0.355, 0.41));
     strip.textContent = STRIP.slice(0, typed);
-    strip.classList.toggle("typing", p > 0.48 && p < 0.57);
-    Object.assign(strip.style, { left: tx + "px", top: ty + "px", width: tw + "px", height: th + "px", opacity: p > 0.48 ? op : 0 });
+    strip.classList.toggle("typing", p > 0.35 && p < 0.42);
+    Object.assign(strip.style, { left: tx + "px", top: ty + "px", width: tw + "px", height: th + "px", opacity: p > 0.35 ? op : 0 });
 
     vis.style.top = ty + th + 18 + "px";
-    vis.style.opacity = span(p, 0.55, 0.57) * (1 - gone);
+    vis.style.opacity = span(p, 0.4, 0.42) * (1 - gone);
     visNum.textContent = Math.round(mix(100, 5, dim)) + "%";
 
-    tick.classList.toggle("on", p > 0.7 && p < 0.79);
+    tick.classList.toggle("on", p > 0.52 && p < 0.58);
 
-    // The word behind the name.
-    letters.forEach((l, i) => l.classList.toggle("on", p > 0.8 + i * 0.018));
-    gloss.classList.toggle("on", p > 0.9);
-    note.classList.toggle("on", p > 0.94);
+    // The word: Greek, then the same word in our letters, then the name, then a dictionary page.
+    slots.forEach((sl, i) => {
+      const st = p > 0.76 + i * 0.005 ? "c" : p > 0.69 + i * 0.005 ? "l" : p > 0.59 + i * 0.01 ? "g" : "";
+      if (sl.dataset.s !== st) sl.dataset.s = st;
+      fit(sl, i, st || "g");
+    });
+    const stage = p > 0.83 ? "4" : p > 0.76 ? "3" : p > 0.69 ? "2" : p > 0.665 ? "1" : "0";
+    if (dict.dataset.stage !== stage) dict.dataset.stage = stage;
+    dict.classList.toggle("paged", p > 0.83);
+    ["s1", "s2", "origin", "next"].forEach((c, i) => dict.classList.toggle(c, p > 0.87 + i * 0.03));
   };
 })();
 
