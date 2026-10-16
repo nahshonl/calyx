@@ -506,10 +506,10 @@ kbd {
 .how-screen.s3 .fix { animation: hl 1.8s ease-out; }
 @keyframes hl { 0%, 35% { background: color-mix(in srgb, var(--lilac-wash) 45%, transparent); } 100% { background: transparent; } }
 
-/* Into Incognito: a sentence is redacted word by word, the bars slide together into one strip,
-   the strip turns down to nothing, and the Greek word behind the name appears. All of it is
-   driven by scroll position in main.js, so it runs backwards when you scroll back up. */
-.redact { position: relative; height: 620vh; }
+/* Into Calypso: a sentence is redacted word by word, the bars slide together into one strip, the
+   strip asks "what does calypso mean?" and fades to nothing, and the answer is pasted in as a
+   dictionary page. Driven by scroll position in main.js, so it runs backwards when you scroll up. */
+.redact { position: relative; height: 560vh; }
 .redact .pin { overflow: hidden; }
 .redact-text { font-family: var(--display); font-size: clamp(1.9rem, 4.4vw, 3.5rem); line-height: 1.25; letter-spacing: -.01em; max-width: 18em; }
 .redact-bars { position: absolute; inset: 0; pointer-events: none; }
@@ -526,70 +526,67 @@ kbd {
 .redact-strip.typing::after { content: ""; width: 1.5px; height: 1.1em; margin-left: 1px; background: currentColor; animation: blink 1s steps(1) infinite; }
 .redact-vis { position: absolute; left: 0; right: 0; text-align: center; font: .8rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #ABA4BE; opacity: 0; }
 .redact-vis b { font-weight: 400; color: #ECE6FF; }
+/* The key being pressed, and Calyx's corner indicator. */
+.redact-key {
+  position: absolute; left: 50%; bottom: 14%; translate: -50% 0;
+  padding: .35em .75em; border-radius: .35em;
+  background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+  color: #ECE6FF; font: 600 1.6rem/1.2 var(--ui); letter-spacing: .04em; white-space: nowrap;
+  opacity: 0; scale: .92;
+}
+.redact-key.on { opacity: 1; scale: 1; }
 .redact-tick {
-  position: absolute; right: 24px; bottom: 24px; padding: 8px 13px; border-radius: 999px;
+  position: absolute; right: 24px; bottom: 24px; display: flex; align-items: center; gap: 8px;
+  padding: 8px 13px; border-radius: 999px;
   background: rgba(11, 10, 18, .86); color: rgba(255, 255, 255, .85); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
   font: 13px var(--ui); opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s;
 }
 .redact-tick.on { opacity: 1; transform: none; }
-/* The finale: the word changes from Greek to our letters to "Calypso", then lands on a
-   dictionary page. Every letter slot stacks its three forms and shows one at a time. */
+.redact-tick .spin { display: none; }
+.redact-tick.working .spin { display: inline-block; }
+
+/* The answer: a dictionary page pasted in, one line at a time. */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .dict { position: absolute; inset: var(--nav-h) 0 0; display: grid; place-items: center; padding-inline: var(--gutter); pointer-events: none; }
-.dict-in { width: min(640px, 100%); padding: 34px 44px 30px; border-radius: 3px; text-align: center; color: #ECE6FF; }
-.dict-fold { display: grid; grid-template-rows: 0fr; }
-.dict-fold > div { min-height: 0; overflow: hidden; }
+.dict-in {
+  width: min(640px, 100%); padding: 34px 44px 30px; border-radius: 3px; text-align: center;
+  background: #F8F5EC; color: #2A243D; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .85);
+  rotate: -.6deg; opacity: 0; scale: .96;
+}
+.dict.on .dict-in { opacity: 1; scale: 1; }
 .dict-guide { display: flex; justify-content: space-between; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px solid rgba(42, 36, 61, .2); font: .7rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #5A546A; }
-.dict-word { font: 400 clamp(3.6rem, 12vw, 8.5rem)/1.05 "GFS Didot", Georgia, "Times New Roman", serif; letter-spacing: .02em; white-space: nowrap; }
-.slot { display: inline-grid; }
-.slot i { grid-area: 1 / 1; justify-self: center; font-style: normal; opacity: 0; filter: blur(10px); translate: 0 .12em; }
-.slot[data-s="g"] .g, .slot[data-s="l"] .l, .slot[data-s="c"] .c { opacity: 1; filter: none; translate: none; }
-.dot { display: inline-block; max-width: 0; overflow: hidden; vertical-align: top; opacity: 0; color: #6B54BA; }
-.dict-label { position: relative; height: 1.7em; margin-top: 12px; font: .8rem/1.7em var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #9DAE86; }
-.dict-label span { position: absolute; inset: 0; opacity: 0; }
-.dict[data-stage="1"] .st1, .dict[data-stage="2"] .st2, .dict[data-stage="3"] .st3, .dict[data-stage="4"] .st4 { opacity: 1; }
-.dict-label .st4 { font: 1.05rem/1.7em var(--body); letter-spacing: 0; text-transform: none; color: #5A546A; }
+.dict-word { font: 400 clamp(3rem, 7vw, 4.8rem)/1.05 "GFS Didot", Georgia, "Times New Roman", serif; letter-spacing: .02em; }
+.dict-word span { color: #6B54BA; }
+.dict-pron { margin-top: 8px; font: 1.05rem var(--body); color: #5A546A; }
 .dict-senses { margin: 20px 0 0; padding-left: 1.5em; text-align: left; font: 1.06rem/1.55 var(--body); }
 .dict-senses li { margin-bottom: 10px; padding-left: .3em; }
 .dict-senses li::marker { font: .85rem var(--mono); color: #6B54BA; }
 .dict-origin { margin-top: 12px; text-align: left; font-size: .98rem; color: #5A546A; }
 .dict-origin b { margin-right: .7em; font: 700 .68rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #2A243D; }
+.dict-origin [lang="el"] { font-family: "GFS Didot", Georgia, serif; }
 .dict-next { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(42, 36, 61, .2); text-align: left; font-size: .98rem; color: #2A243D; -webkit-mask-image: linear-gradient(#000 10%, transparent 95%); mask-image: linear-gradient(#000 10%, transparent 95%); }
 .dict-next b { margin-right: .3em; font: 400 1.35rem var(--display); }
-.dict-senses li, .dict-origin, .dict-next { opacity: 0; translate: 0 .5em; }
-.dict.s1 .dict-senses li:first-child, .dict.s2 .dict-senses li:last-child, .dict.origin .dict-origin, .dict.next .dict-next { opacity: 1; translate: none; }
-/* The page itself. */
-.dict.paged .dict-in { background: #F8F5EC; color: #2A243D; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .85); rotate: -.6deg; }
-.dict.paged .dict-word { font-size: clamp(3rem, 7vw, 4.8rem); }
-.dict.paged .dot { max-width: .45em; opacity: 1; }
-.dict.paged .dict-fold { grid-template-rows: 1fr; }
+.dict .ln { opacity: 0; translate: 0 .4em; }
+.dict .ln.on { opacity: 1; translate: none; }
 /* Transitions only once the script has set things up, so nothing animates on page load. */
-.redact.ready .slot i { transition: opacity .45s, filter .45s, translate .45s var(--ease); }
-.redact.ready .slot { transition: width .5s var(--ease); }
-.redact.ready .dict-in { transition: background-color .8s, box-shadow .8s, color .8s, rotate .8s var(--ease); }
-.redact.ready .dict-word { transition: font-size .8s var(--ease); }
-.redact.ready .dot { transition: max-width .6s var(--ease), opacity .6s; }
-.redact.ready .dict-fold { transition: grid-template-rows .8s var(--ease); }
-.redact.ready .dict-label span { transition: opacity .4s; }
-.redact.ready .dict-senses li, .redact.ready .dict-origin, .redact.ready .dict-next { transition: opacity .6s, translate .6s var(--ease); }
+.redact.ready .redact-key { transition: opacity .25s, scale .25s var(--ease); }
+.redact.ready .dict-in { transition: opacity .35s, scale .35s var(--ease); }
+.redact.ready .dict .ln { transition: opacity .5s, translate .5s var(--ease); }
 @media (max-width: 600px) {
   .dict-in { padding: 24px 20px 20px; }
-  .dict.paged .dict-word { font-size: 2.7rem; }
+  .dict-word { font-size: 2.7rem; }
   .dict-senses { font-size: 1rem; }
+  .redact-key { font-size: 1.3rem; }
 }
 @media (max-height: 760px) { .dict-next { display: none; } }
 
-/* No scroll-driven version (reduced motion, short windows): a redacted sentence above the word. */
+/* No scroll-driven version (reduced motion, short windows): the redacted sentence above the page. */
 .redact.flat { height: auto; background: #13111A; }
 .redact.flat .pin { position: relative; height: auto; display: block; padding-block: calc(var(--nav-h) + 72px) 96px; }
 .redact.flat .rw { color: transparent; background: rgba(11, 10, 18, .94); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.redact.flat .redact-bars, .redact.flat .redact-strip, .redact.flat .redact-vis, .redact.flat .redact-tick { display: none; }
+.redact.flat .redact-bars, .redact.flat .redact-strip, .redact.flat .redact-vis, .redact.flat .redact-tick, .redact.flat .redact-key { display: none; }
 .redact.flat .dict { position: static; margin-top: 72px; }
-.redact.flat .dict-in { background: #F8F5EC; color: #2A243D; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .85); }
-.redact.flat .dict-word { font-size: clamp(2.7rem, 7vw, 4.8rem); }
-.redact.flat .slot .c, .redact.flat .dict-label .st4, .redact.flat .dict-senses li, .redact.flat .dict-origin, .redact.flat .dict-next { opacity: 1; filter: none; translate: none; }
-.redact.flat .dot { max-width: .45em; opacity: 1; }
-.redact.flat .dict-fold { grid-template-rows: 1fr; }
+.redact.flat .dict-in, .redact.flat .dict .ln { opacity: 1; scale: none; translate: none; }
 
 /* Incognito: a dark section whatever the theme, with the bar fading out as you scroll. */
 .inc {

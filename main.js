@@ -50,10 +50,11 @@ document.querySelectorAll("[data-words]").forEach((el) => {
 });
 
 // The way into Calypso, the incognito mode (index.html). As the section scrolls past, its sentence
-// is redacted word by word and the page darkens; the bars slide together into one strip that types
-// "ask without a trace"; a visibility readout counts it down from 100% to 5% and it's gone. Then
-// καλύπτω appears, turns into "kalyptō" and then "Calypso" letter by letter, and lands on a
-// dictionary page. Every step is a function of scroll position, so it all runs backwards too.
+// is redacted word by word and the page darkens; the bars slide together into one strip, which
+// asks "what does calypso mean?" and is turned down to almost nothing. Return sends it and the
+// strip goes, the corner says the answer is copied, ⌘V, and the answer is pasted in as a
+// dictionary page, one line at a time. Every step is a function of scroll position, so it all
+// runs backwards when you scroll up.
 (() => {
   const sec = document.querySelector(".redact");
   if (!sec) return;
@@ -62,19 +63,11 @@ document.querySelectorAll("[data-words]").forEach((el) => {
   const strip = sec.querySelector(".redact-strip");
   const vis = sec.querySelector(".redact-vis");
   const visNum = vis.querySelector("b");
+  const key = sec.querySelector(".redact-key");
   const tick = sec.querySelector(".redact-tick");
+  const tickText = tick.querySelector(".redact-tick-t");
   const dict = sec.querySelector(".dict");
-  const slots = [...dict.querySelectorAll(".slot")];
-  const word = dict.querySelector(".dict-word");
-  // Each letter slot stacks its three forms. Size it to the one showing (in em, so it follows the
-  // word's font size) so "Calypso" isn't spaced out to make room for "ω".
-  let widths = null, lastP = 0;
-  const fit = (sl, i, form) => { if (widths) sl.style.width = widths[i][form] + "em"; };
-  document.fonts.ready.then(() => {
-    const fs = parseFloat(getComputedStyle(word).fontSize);
-    widths = slots.map((sl) => Object.fromEntries([...sl.children].map((g) => [g.className, g.getBoundingClientRect().width / fs])));
-    sec._progress(lastP);
-  });
+  const lines = [...dict.querySelectorAll(".ln")];
   const STRIP = strip.dataset.text;
   const DARK = [19, 17, 26];
 
@@ -95,12 +88,12 @@ document.querySelectorAll("[data-words]").forEach((el) => {
   const mix = (a, b, t) => a + (b - a) * t;
   const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const rgb = (c) => (c.match(/\d+(\.\d+)?/g) || [0, 0, 0]).slice(0, 3).map(Number);
+  const LINE_AT = [0.7, 0.72, 0.74, 0.77, 0.8, 0.83, 0.86];   // guide words, headword, … next entry
 
   sec._progress = (p) => {
-    lastP = p;
     const flat = still || innerHeight < 640;
     sec.classList.toggle("flat", flat);
-    if (flat) { sec.style.backgroundColor = ""; slots.forEach((sl, i) => fit(sl, i, "c")); return; }
+    if (flat) { sec.style.backgroundColor = ""; return; }
     if (!sec.classList.contains("ready")) requestAnimationFrame(() => requestAnimationFrame(() => sec.classList.add("ready")));
 
     // The page darkens into the Calypso section's black.
@@ -113,9 +106,9 @@ document.querySelectorAll("[data-words]").forEach((el) => {
     const tw = Math.min(560, box.width * 0.84), th = box.width < 600 ? 46 : 54;
     const tx = (box.width - tw) / 2, ty = navH + (box.height - navH) / 2 - th / 2;
 
-    // Strip opacity: solid, then turned down to 5%, then gone.
-    const dim = span(p, 0.42, 0.5), gone = span(p, 0.5, 0.52);
-    const op = mix(1, 0.05, dim) * (1 - gone);
+    // The strip: solid, turned down to 10%, then gone once Return sends it.
+    const dim = span(p, 0.44, 0.52), gone = span(p, 0.54, 0.56);
+    const op = mix(1, 0.1, dim) * (1 - gone);
 
     const n = spans.length;
     spans.forEach((sp, i) => {
@@ -132,28 +125,25 @@ document.querySelectorAll("[data-words]").forEach((el) => {
       sp.style.opacity = s >= 1 ? 0 : 1;
     });
 
-    // The merged strip types its line, then fades with the bars.
-    const typed = Math.round(STRIP.length * span(p, 0.355, 0.41));
-    strip.textContent = STRIP.slice(0, typed);
-    strip.classList.toggle("typing", p > 0.35 && p < 0.42);
+    // The strip types the question.
+    strip.textContent = STRIP.slice(0, Math.round(STRIP.length * span(p, 0.355, 0.43)));
+    strip.classList.toggle("typing", p > 0.35 && p < 0.54);
     Object.assign(strip.style, { left: tx + "px", top: ty + "px", width: tw + "px", height: th + "px", opacity: p > 0.35 ? op : 0 });
 
     vis.style.top = ty + th + 18 + "px";
-    vis.style.opacity = span(p, 0.4, 0.42) * (1 - gone);
-    visNum.textContent = Math.round(mix(100, 5, dim)) + "%";
+    vis.style.opacity = span(p, 0.42, 0.44) * (1 - span(p, 0.53, 0.55));
+    visNum.textContent = Math.round(mix(100, 10, dim)) + "%";
 
-    tick.classList.toggle("on", p > 0.52 && p < 0.58);
+    // Return sends it; the corner works, then says it's copied; ⌘V pastes the answer.
+    const keyText = p > 0.52 && p < 0.57 ? "Return" : p > 0.66 && p < 0.71 ? "⌘ V" : "";
+    if (keyText) key.textContent = keyText;
+    key.classList.toggle("on", !!keyText);
+    tick.classList.toggle("on", p > 0.56 && p < 0.71);
+    tick.classList.toggle("working", p < 0.6);
+    tickText.textContent = p < 0.6 ? "Thinking" : "✓ Copied · she who conceals";
 
-    // The word: Greek, then the same word in our letters, then the name, then a dictionary page.
-    slots.forEach((sl, i) => {
-      const st = p > 0.76 + i * 0.005 ? "c" : p > 0.69 + i * 0.005 ? "l" : p > 0.59 + i * 0.01 ? "g" : "";
-      if (sl.dataset.s !== st) sl.dataset.s = st;
-      fit(sl, i, st || "g");
-    });
-    const stage = p > 0.83 ? "4" : p > 0.76 ? "3" : p > 0.69 ? "2" : p > 0.665 ? "1" : "0";
-    if (dict.dataset.stage !== stage) dict.dataset.stage = stage;
-    dict.classList.toggle("paged", p > 0.83);
-    ["s1", "s2", "origin", "next"].forEach((c, i) => dict.classList.toggle(c, p > 0.87 + i * 0.03));
+    dict.classList.toggle("on", p > 0.69);
+    lines.forEach((l, i) => l.classList.toggle("on", p > LINE_AT[i]));
   };
 })();
 
