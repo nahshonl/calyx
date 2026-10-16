@@ -555,10 +555,13 @@ kbd {
 .ex-result { color: var(--ok); font-weight: 600; opacity: 0; transition: opacity .3s; }
 .sc-code.submitted .ex-result { opacity: 1; }
 
-.ch-msg { width: fit-content; max-width: 70%; margin-bottom: .45em; padding: .45em .8em; border-radius: 1em; background: var(--win-2); }
-.ch-msg b { display: block; font-size: .8em; color: var(--lilac); }
-.ch-compose { position: absolute; left: 1.6em; right: 1.6em; bottom: 1.1em; min-height: 2.3em; padding: .5em .9em; border: 1px solid var(--rule); border-radius: 1.2em; }
-.ch-fill:empty::before { content: "Message"; opacity: .45; }
+.ml-from { font-size: .85em; color: var(--ink-2); }
+.ml-from b { color: var(--win-ink); }
+.ml-subj { margin: .2em 0 .5em; font-size: 1.15em; font-weight: 600; }
+.ml-body { font-size: .95em; max-width: 34em; }
+.ml-reply { position: absolute; left: 1.6em; right: 1.6em; bottom: 1em; min-height: 4.4em; padding: .6em .8em; border: 1px solid var(--rule); border-radius: .5em; font-size: .9em; }
+.ml-fill:empty::before { content: "Reply…"; opacity: .45; }
+.sc-mail .cx-box { top: 44%; }
 
 .sc-off p { margin-bottom: .3em; }
 .nt-h { font-size: 1.5em; font-weight: 700; margin-bottom: .4em; }

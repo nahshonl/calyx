@@ -211,11 +211,12 @@ update();
       { at: 1800, paste: [".ed-fill", "def first_repeat(nums):\n    seen = set()\n    for n in nums:\n        if n in seen:\n            return n\n        seen.add(n)"], corner: "✓ Pasted · remembers each number it has seen" },
       { at: 1300, cls: "submitted" },
     ],
-    chat: [
-      { at: 900, keys: "⌥ Space", cls: "open" },
-      { at: 600, type: [".cx-type", "say yes but i can only come at 8"] },
+    mail: [
+      { at: 900, keys: "⌃ Space", flash: true, corner: "Screenshot 1" },
+      { at: 1200, keys: "⌥ Space", cls: "open", corner: "" },
+      { at: 600, type: [".cx-type", "say no politely"] },
       { at: 500, keys: "⌃ ⇧ Space", cls: "closed", corner: "Thinking", spin: true },
-      { at: 1500, paste: [".ch-fill", "I'm in! Can only make it by 8 though, so you guys can start first"], corner: "✓ Pasted · coming, but at 8" },
+      { at: 1600, paste: [".ml-fill", "Hi Rachel, thanks for the invite! I can't make it this Saturday, but I'd be glad to catch up on what I missed next week. Best,"], corner: "✓ Pasted · polite no, offers to catch up" },
     ],
     off: [
       { at: 900, keys: "⌥ Space", cls: "open" },
