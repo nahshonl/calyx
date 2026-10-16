@@ -52,7 +52,7 @@ document.querySelectorAll("[data-words]").forEach((el) => {
 // The way into Calypso, the incognito mode (index.html). As the section scrolls past, its sentence
 // is redacted word by word and the page darkens; the bars slide together into one strip, which
 // asks "what does calypso mean?" and is turned down to almost nothing. Return sends it and the
-// strip goes, the corner says the answer is copied, ⌘V, and the answer is pasted in as a
+// strip goes, the island says the answer is copied, ⌘V, and the answer is pasted in as a
 // dictionary page, one line at a time. Every step is a function of scroll position, so it all
 // runs backwards when you scroll up.
 (() => {
@@ -134,13 +134,13 @@ document.querySelectorAll("[data-words]").forEach((el) => {
     vis.style.opacity = span(p, 0.42, 0.44) * (1 - span(p, 0.53, 0.55));
     visNum.textContent = Math.round(mix(100, 10, dim)) + "%";
 
-    // Return sends it; the corner works, then says it's copied; ⌘V pastes the answer.
+    // Return sends it; the island thinks, then gives a few words about the answer; ⌘V pastes it.
     const keyText = p > 0.52 && p < 0.57 ? "Return" : p > 0.66 && p < 0.71 ? "⌘ V" : "";
     if (keyText) key.textContent = keyText;
     key.classList.toggle("on", !!keyText);
     tick.classList.toggle("on", p > 0.56 && p < 0.71);
-    tick.classList.toggle("working", p < 0.6);
-    tickText.textContent = p < 0.6 ? "Thinking" : "✓ Copied · she who conceals";
+    tick.querySelector(".qi-ico").dataset.i = p < 0.6 ? "dots" : "ok";
+    tickText.textContent = p < 0.6 ? "Thinking" : "she who conceals";
 
     dict.classList.toggle("on", p > 0.69);
     lines.forEach((l, i) => l.classList.toggle("on", p > LINE_AT[i]));

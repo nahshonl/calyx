@@ -615,7 +615,7 @@ kbd {
 .redact-strip.typing::after { content: ""; width: 1.5px; height: 1.1em; margin-left: 1px; background: currentColor; animation: blink 1s steps(1) infinite; }
 .redact-vis { position: absolute; left: 0; right: 0; text-align: center; font: .8rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #ABA4BE; opacity: 0; }
 .redact-vis b { font-weight: 400; color: #ECE6FF; }
-/* The key being pressed, and Calyx's corner indicator. */
+/* The key being pressed, and the quiet island just under the sticky nav (the top of the screen). */
 .redact-key {
   position: absolute; left: 50%; bottom: 14%; translate: -50% 0;
   padding: .35em .75em; border-radius: .35em;
@@ -624,15 +624,7 @@ kbd {
   opacity: 0; scale: .92;
 }
 .redact-key.on { opacity: 1; scale: 1; }
-.redact-tick {
-  position: absolute; right: 24px; bottom: 24px; display: flex; align-items: center; gap: 8px;
-  padding: 8px 13px; border-radius: 999px;
-  background: rgba(11, 10, 18, .86); color: rgba(255, 255, 255, .85); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
-  font: 13px var(--ui); opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s;
-}
-.redact-tick.on { opacity: 1; transform: none; }
-.redact-tick .spin { display: none; }
-.redact-tick.working .spin { display: inline-block; }
+.redact .qi { top: var(--nav-h); --hud-edge: rgba(255, 255, 255, .1); font-size: 15px; }
 
 /* The answer: a dictionary page pasted in, one line at a time. */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -673,7 +665,7 @@ kbd {
 .redact.flat { height: auto; background: #13111A; }
 .redact.flat .pin { position: relative; height: auto; display: block; padding-block: calc(var(--nav-h) + 72px) 96px; }
 .redact.flat .rw { color: transparent; background: rgba(11, 10, 18, .94); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.redact.flat .redact-bars, .redact.flat .redact-strip, .redact.flat .redact-vis, .redact.flat .redact-tick, .redact.flat .redact-key { display: none; }
+.redact.flat .redact-bars, .redact.flat .redact-strip, .redact.flat .redact-vis, .redact.flat .qi, .redact.flat .redact-key { display: none; }
 .redact.flat .dict { position: static; margin-top: 72px; }
 .redact.flat .dict-in, .redact.flat .dict .ln { opacity: 1; scale: none; translate: none; }
 
