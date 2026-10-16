@@ -204,11 +204,11 @@ update();
       { at: 1700, corner: "✓ B · binary search halves the list each step" },
       { at: 1600, cls: "picked" },
     ],
-    css: [
+    code: [
       { at: 800, cls: "focused" },
       { at: 800, keys: "⌃ Space", flash: true, corner: "Screenshot 1" },
       { at: 1300, keys: "⌃ ⇧ Space", corner: "Thinking", spin: true },
-      { at: 1600, paste: [".ex-fill", "color"], corner: "✓ Pasted · use the color property" },
+      { at: 1800, paste: [".ed-fill", "def first_repeat(nums):\n    seen = set()\n    for n in nums:\n        if n in seen:\n            return n\n        seen.add(n)"], corner: "✓ Pasted · remembers each number it has seen" },
       { at: 1300, cls: "submitted" },
     ],
     chat: [

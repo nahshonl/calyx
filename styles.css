@@ -534,7 +534,7 @@ kbd {
 .q-meta { font-size: .85em; color: var(--ink-2); }
 .q-text { font-size: 1.2em; font-weight: 600; margin: .25em 0 .7em; }
 .py-ex { margin-bottom: .8em; }
-.py-ex code, .ex-code, .py-ed { font-family: ui-monospace, Menlo, monospace; }
+.py-ex code, .py-ed { font-family: ui-monospace, Menlo, monospace; }
 .py-ex code { padding: .1em .35em; border-radius: .3em; background: var(--win-2); font-size: .92em; }
 .py-ed { padding: .7em .9em; border-radius: .5em; background: #1F1B2B; color: #E6E1F2; font-size: .92em; line-height: 1.7; }
 .py-ed div { white-space: pre; }
@@ -545,15 +545,15 @@ kbd {
 .sc-quiz.picked .q-right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, transparent); }
 .sc-quiz.picked .q-right::after { content: "  ✓ Correct"; color: var(--ok); font-weight: 600; }
 
-.ex-code { margin: 0; padding: .9em 1em; border-radius: .5em; background: #1F1B2B; color: #E6E1F2; font-size: .95em; line-height: 1.6; white-space: pre; overflow: hidden; }
-.ex-blank { display: inline-block; min-width: 4.2em; padding: 0 .3em; border-bottom: 1.5px solid #9D93B5; background: rgba(255, 255, 255, .07); vertical-align: bottom; }
-.sc-css.focused .ex-blank { box-shadow: 0 0 0 2px #5B8DEF; border-radius: 2px; }
-.ex-fill { color: #F5C2E7; }
+.ed { min-height: 7.4em; padding: .6em .9em; border-radius: .5em; background: #1F1B2B; color: #E6E1F2; font: .85em/1.5 ui-monospace, Menlo, monospace; transition: box-shadow .2s; }
+.ed-fill { margin: 0; font: inherit; white-space: pre; overflow: hidden; }
+.sc-code.focused .ed { box-shadow: 0 0 0 2px #5B8DEF; }
+.sc-code.focused .ed-fill:empty::before { content: ""; display: inline-block; width: 1.5px; height: 1.1em; vertical-align: -.2em; background: #E6E1F2; animation: blink 1s steps(1) infinite; }
 .ex-row { display: flex; align-items: center; gap: 1em; margin-top: 1em; }
 .ex-submit { padding: .5em 1em; border-radius: .4em; background: var(--ok); color: #fff; font-weight: 600; transition: transform .1s; }
-.sc-css.submitted .ex-submit { transform: scale(.96); }
+.sc-code.submitted .ex-submit { transform: scale(.96); }
 .ex-result { color: var(--ok); font-weight: 600; opacity: 0; transition: opacity .3s; }
-.sc-css.submitted .ex-result { opacity: 1; }
+.sc-code.submitted .ex-result { opacity: 1; }
 
 .ch-msg { width: fit-content; max-width: 70%; margin-bottom: .45em; padding: .45em .8em; border-radius: 1em; background: var(--win-2); }
 .ch-msg b { display: block; font-size: .8em; color: var(--lilac); }
